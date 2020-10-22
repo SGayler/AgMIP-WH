@@ -1,0 +1,9 @@
+notes
+
+- Wurzelrückstände, obwohl in DB angegeben, ignoriert (so wie in NZ)
+- one could possibly remove the most inner loop N/T, and not write everything again, but just replace one line
+- Saattiefe und Reihenabstand in DB in cm angegeben und konvertiert
+- no soil management
+- no irrigation
+- where does the elevated c02 go?
+- ROTS without forced emergence data, as in the GECROS callibration data
