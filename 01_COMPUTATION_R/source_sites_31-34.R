@@ -45,6 +45,6 @@ interim <- data.table("Ausbringungstermin" = c(ymd(data$manag$date_fert1[ksite])
 )
 tpl_input$no_min_fert        <- nrow(interim)
 interim$Ausbringungstermin   %<>% ymd %>% format(., "%d%m%y")
-tpl_input$min_fert_table     <- paste(apply(interim, 1, function(x) paste(x, collapse = " ")), collapse="\n")
-rm(interim)
+tpl_input$min_fert_table     <- paste(apply(interim, 1, function(x) paste(x, collapse = "\t")), collapse="\n")
+# rm(interim)
 # END

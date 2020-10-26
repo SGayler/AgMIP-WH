@@ -58,9 +58,9 @@ interim <- data.table("Ausbringungstermin" = c(ymd(data$manag$date_fert1[ksite])
                       , "AmmoniumNGehaltDuenger"= 75
                       , "AmidNGehalDuenger"     = 0
 )
-tpl_input$no_min_fert <- nrow(interim)
+tpl_input$no_min_fert        <- nrow(interim)
 interim$Ausbringungstermin   %<>% ymd %>% format(., "%d%m%y")
-tpl_input$min_fert_table <-  paste(apply(interim, 1, function(x) paste(x, collapse = " ")), collapse="\n")
+tpl_input$min_fert_table     <-  paste(apply(interim, 1, function(x) paste(x, collapse = "\t")), collapse="\n")
 rm(interim)
 
 # 10010 ----
@@ -69,7 +69,7 @@ interim        <- interim[, c("Schichtnummer", "AnzSimSchichten", "Tongehalt", "
                               , "GehaltOrganischerKohlenstoff","Lagerungsdichte", "Steingehalt","Ph"
 )]
 tpl_input$no_soil_lyr   <- sum(interim$AnzSimSchichten )
-tpl_input$soil_lyr_table<-  paste(apply(interim, 1, function(x) paste(x, collapse = " ")), collapse="\n")
+tpl_input$soil_lyr_table<-  interim %>% apply(., 1, formatC) %>% t %>% apply(., 1, function(x) paste(x, collapse = "\t")) %>% paste(., collapse="\n")  
 
 # 10011 ----
 interim        <- data.table(sqlFetch(con, "BewegungStartwerte"))[Termin %between% c(tpl_input$Saattermin, tpl_input$TerminErnteNutzung)] %>% 

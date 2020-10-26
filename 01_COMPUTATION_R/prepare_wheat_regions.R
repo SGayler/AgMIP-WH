@@ -9,7 +9,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 
-data$manag <- fread("./00_DATA/wheat_regions.csv")
+data$manag <- fread("./auxFiles/wheat_regions.csv")
 # insert fertilisation dates, here only 2.
 {
    data$manag$date_anthesis <- ifelse(data$manag$date_anthesis>data$manag$date_maturity, ymd(data$manag$date_anthesis)-years(1), data$manag$date_anthesis) %>% 
@@ -23,3 +23,21 @@ data$manag <- fread("./00_DATA/wheat_regions.csv")
    stopifnot(all(data$manag$date_anthesis>data$manag$date_sowing))
    stopifnot(all(data$manag$date_maturity>data$manag$date_anthesis))
 }
+
+
+
+data$manag <- fread("./auxFiles/wheat_regions.csv")
+data$manag$date_sowing   %>%  ymd(.) + years(1) -> data$manag$date_sowing 
+data$manag$date_anthesis %>%  ymd(.) + years(1) -> data$manag$date_anthesis  
+data$manag$date_maturity %>%  ymd(.) + years(1) -> data$manag$date_maturity 
+data$manag$date_fert1    %>%  ymd(.) + years(1) -> data$manag$date_fert1    
+data$manag$date_fert2    %>%  ymd(.) + years(1) -> data$manag$date_fert2    
+data$manag <- fwrite(data$manag, "./auxFiles/wheat_regions.csv", quote = FALSE)
+
+
+
+
+
+
+
+
