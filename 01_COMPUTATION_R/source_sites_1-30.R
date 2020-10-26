@@ -1,11 +1,18 @@
-
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#
+#
+#    SETUP sites 1-30
+#
+#    author: Tobias Weber <tobias.weber@uni-hohenheim.de>
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 tpl_xnd   <- tpl$xnd
 tpl_input <- list()
 
 # 10000 ----
 # selects information of kth year
-tpl_input <-  sqlFetch(con, "BewegungPflanzendaten")[Saattermin = tpl_input$DatumStart][kyear, c("Sorte", "Saattiefe", "Reihenabstand", "Saatstaerke")]
+tpl_input <-  sqlFetch(con, "Projekt")[kyear, c("DatumStart", "DatumEnde")]  
    # 10001 and 10002----
 # *Farm Data
 # hard coded to "1", since identical
@@ -35,17 +42,16 @@ tpl_input$Reihenabstand %<>% "/"(100)
 tpl_input$MaxDurchwurzelungstiefe %<>% "/"(100)
 # 10006 ---- 
 ##### OLD 
-# interim        <- data.table(sqlFetch(con, "BewegungMineraldüngung"))[Ausbringungstermin %between% c(tpl_input$Saattermin, tpl_input$TerminErnteNutzung)] %>%
+# interim        <- data.table(sqlFetch(con, "BewegungMinerald?ngung"))[Ausbringungstermin %between% c(tpl_input$Saattermin, tpl_input$TerminErnteNutzung)] %>%
 #    unique(., by = "Ausbringungstermin")
-# interim$Ausbringungstermin   %<>% ymd %>% format(., "%d%m%y")
-# query.fert_min <- sqlFetch(con, "TabelleDüngerMineralisch")[c("NameDuenger", "Code")]
-# interim        %<>%  merge(., query.fert_min, by.x = "Düngerart", by.y =  "NameDuenger" )
-# interim        <- interim[, c("Ausbringungstermin", "Düngerart", "Code", "Ausbringungsmenge", "NitratNGehaltDuenger", "AmmoniumNGehaltDuenger", "AmidNGehalDuenger")]
+# # query.fert_min <- sqlFetch(con, "TabelleD?ngerMineralisch")[c("NameDuenger", "Code")]
+# interim        %<>%  merge(., query.fert_min, by.x = "D?ngerart", by.y =  "NameDuenger" )
+# interim        <- interim[, c("Ausbringungstermin", "D?ngerart", "Code", "Ausbringungsmenge", "NitratNGehaltDuenger", "AmmoniumNGehaltDuenger", "AmidNGehalDuenger")]
 
 ##### NEW
 interim <- data.table("Ausbringungstermin" = c(ymd(data$manag$date_fert1[ksite]) - years(year(data$manag$date_sowing[ksite]) - year(tpl_input$Saattermin)),
                                                ymd(data$manag$date_fert2[ksite]) - years(year(data$manag$date_sowing[ksite]) - year(tpl_input$Saattermin)))
-                      , "Düngerart"             = "Ammonnitrat"
+                      , "D?ngerart"             = "Ammonnitrat"
                       , "Code"                  = "FE001"
                       , "Ausbringungsmenge"     = 150
                       , "NitratNGehaltDuenger"  = 75
@@ -53,6 +59,7 @@ interim <- data.table("Ausbringungstermin" = c(ymd(data$manag$date_fert1[ksite])
                       , "AmidNGehalDuenger"     = 0
 )
 tpl_input$no_min_fert <- nrow(interim)
+interim$Ausbringungstermin   %<>% ymd %>% format(., "%d%m%y")
 tpl_input$min_fert_table <-  paste(apply(interim, 1, function(x) paste(x, collapse = " ")), collapse="\n")
 rm(interim)
 

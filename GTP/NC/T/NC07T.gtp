@@ -1,5 +1,9 @@
 Table A3.3 The species file - WHEAT.GTP (CERES)
 ===============================================================================
+Traits: 'Normal' = 0, 'High yielding' = 1
+-------------------------------------------------------------------------------
+2000000   1
+===============================================================================
 GENETIC AND ECOLOGICAL DESCRIPTION OF WHEAT
 ===============================================================================
 Type     Name(Code) Ecotype    DaylengthType    LvAngleD    PltH (Plant Height)
@@ -127,11 +131,11 @@ The fives row: Thermal Time
 The sixth row: max. (Development Stage)
 -------------------------------------------------------------------------------
 // Hier werden von MatLab (Run_XN_GlobalT_Simus.m) die jeweiligen 
-// Sortenparameter eingesetzt:
+ 2  2  2  2  5  5  0  0 -1
 2000036
 34  34  34  34  40  40  26  26  26
  24           24           24           24         28.8         28.8           17           17           17
- 2  2  2  2  5  5  0  0 -1
+2   2   2   2   5   5   0   0   -1
  425.4           -99           -99         214.2         815.4           100           -99           -99           -99
 1   1   1   1   1   1   1   1   1
 (1) (2) (3) (4) (5) (6) (7) (8) (9)

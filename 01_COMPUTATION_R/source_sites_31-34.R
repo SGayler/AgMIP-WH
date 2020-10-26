@@ -1,4 +1,11 @@
-
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+#
+#
+#    SETUP sites 31-30
+#
+#    author: Tobias Weber <tobias.weber@uni-hohenheim.de>
+#
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 tpl_xnd   <- tpl[[as.character(ksite)]]
 tpl_input <- list()
@@ -29,14 +36,15 @@ tpl_input$TerminErnteNutzung <- tpl_input$DatumEnde
 
 interim <- data.table("Ausbringungstermin" = c(ymd(data$manag$date_fert1[ksite]) - years(year(data$manag$date_sowing[ksite]) - year(tpl_input$Saattermin)),
                                                ymd(data$manag$date_fert2[ksite]) - years(year(data$manag$date_sowing[ksite]) - year(tpl_input$Saattermin)))
-                      , "Düngerart"             = "Ammonnitrat"
+                      , "D?ngerart"             = "Ammonnitrat"
                       , "Code"                  = "FE001"
                       , "Ausbringungsmenge"     = 150
                       , "NitratNGehaltDuenger"  = 75
                       , "AmmoniumNGehaltDuenger"= 75
                       , "AmidNGehalDuenger"     = 0
 )
-tpl_input$no_min_fert <- nrow(interim)
-tpl_input$min_fert_table <-  paste(apply(interim, 1, function(x) paste(x, collapse = " ")), collapse="\n")
+tpl_input$no_min_fert        <- nrow(interim)
+interim$Ausbringungstermin   %<>% ymd %>% format(., "%d%m%y")
+tpl_input$min_fert_table     <- paste(apply(interim, 1, function(x) paste(x, collapse = " ")), collapse="\n")
 rm(interim)
 # END
