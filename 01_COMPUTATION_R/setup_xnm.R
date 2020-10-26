@@ -65,7 +65,6 @@ for(ksite in k$ksite.v){
    }, x = tpl_input,
    y = names(tpl_input)) %>% invisible
    
-   
    # xnm is written to all 8 subfolders
    file.path(path$PROJ_ROOT, k$kmodelktrait.v, "param", data$fnames$name_xnm[ksite])  %>% lapply(., writeLines, text = tpl_xnm) %>%  invisible
    # odbcCloseAll()
