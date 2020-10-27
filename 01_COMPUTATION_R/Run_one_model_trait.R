@@ -10,19 +10,25 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # 0 INITIALISE ----
+
+# FALSE, no XN3 input files are created
+# TRUE,     XN3 input files are created. 
+setup.query <- TRUE
+
+# load and source the setup
 source("./01_COMPUTATION_R/source_initialisation.R")
 
-# RUN MODEL and Trait combination
+# RUN specific kmodel and ktrait combination
+# Here is the potential, to parallelise, requiring only one instance of R!!!!!
 kmodeltrait<- k$kmodelktrait.v[1]
 
 # xni template files
 tpl      <- list.files("./XNI/", full.names = TRUE, pattern = "xni.tpl") %>%  lapply(., readLines) %>% setNames(., "xni")
+# get the xnp of the kmodeltrait combination
 k$kxnp.v <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = ".xnp")
 
 # 1 RUN ----
 path$ProjectDir <- file.path(getwd(), str_remove(path$PROJ_ROOT, "./"), kmodeltrait)
-
-
 
 for(kxnp in k$kxnp.v){
    
@@ -30,10 +36,12 @@ for(kxnp in k$kxnp.v){
    tpl_xni   <- tpl$xni
    tpl_input <- list()
    
+    ksite <- substring(kxnp, 2,3) %>% as.integer
+   
    tpl_input$"$LastProject" <- kxnp
    tpl_input$"$ProjectDir"  <- path$ProjectDir 
    
-   # the replacement
+   ## the replacement
    mapply(function(x, y) {
       tpl_xni <<- str_replace(tpl_xni, pattern = paste0("\\", y), replacement = x) 
       
@@ -45,26 +53,33 @@ for(kxnp in k$kxnp.v){
    
    # 1b copy .gtp
    file.copy(
-      from = list.files(file.path(path$GTP, paste0("N", substring(kxnp, 1,1)), substring(kxnp, 6,6)), recursive = TRUE, full.names = TRUE, pattern = paste0("N",substring(kxnp, 1,3), substring(kxnp, 6, 6), ".gtp"))
+      from = list.files(file.path(path$GTP, paste0("N", substring(kxnp, 1,1)), substring(kxnp, 6,6)), recursive = TRUE, full.names = TRUE, pattern = paste0("N", substring(kxnp, 1,3), substring(kxnp, 6, 6), ".gtp"))
       , to = file.path(path$PROJ_ROOT, kmodeltrait, "param", "wheat.gtp")
       , overwrite = TRUE
-   )   
-   # 1c copy modlib
-   if(data$manag$water_regime[as.numeric(substring(kxnp, 2,3))] == "Irrigated"){
-      with_UW <- "_UW"
-   }else if(data$manag$water_regime[as.numeric(substring(kxnp, 2,3))] == "Rainfed"){
-      with_UW <- ""
-   }
+      )   
    
-   file.copy(
-      from = file.path(path$modlib, paste0("modlib_", substring(kxnp, 6,6), "", ".dll"))
-      , to = file.path(path$SOURCE_ROOT, kmodeltrait, "modlib.dll")
-      , overwrite = TRUE
-   )
+   readLines(file.path(path$PROJ_ROOT, kmodeltrait, "param", "wheat.gtp")) %>% 
+      str_replace(., pattern = data$manag$name_variety[ksite], replacement = strtrim(data$manag$name_variety[ksite],10)) %>% writeLines(., file.path(path$PROJ_ROOT, kmodeltrait, "param", "wheat.gtp"))
+
+   # 1c copy .xnw
+   list.files(path$XNW, pattern = data$fnames[ksite]$name_short, full.names = TRUE)  %>% 
+      file.copy(., to = file.path(path$PROJ_ROOT, kmodeltrait)) %>% invisible 
+                                                                                                    
+   # 1d delete old results
+   file.path(path$PROJ_ROOT, kmodeltrait) %>% 
+      list.files(., pattern = paste(c(str_replace(kxnp,".xnp" ,".rfx"), str_remove(kxnp, ".xnp"), "rfg"), collapse ="|"), full.names = TRUE) %>% 
+      grep(., pattern = paste(c(".xnd",".xnp"), collapse="|"),  invert=TRUE, value = TRUE) %>% 
+      unlink
    
-   # 1d Run ExperN
-   
-   
+   # 1e Run Expert-N
+   system.time(paste(file.path(path$SOURCE_ROOT, kmodeltrait, "expertn.exe"), "/autostart") %>% system(., timeout = 0))
+      
+   # 1f remove .xnw (save disk space)
+   list.files(file.path(path$PROJ_ROOT, kmodeltrait), pattern = data$fnames[ksite]$name_short, full.names = TRUE)  %>% 
+      lapply(., file.remove) %>% invisible
+
 }
+
+# add email sending error messages, here.
 
 

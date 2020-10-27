@@ -10,7 +10,7 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # 0 INITIALISE ----
-source("./01_COMPUTATION_R/source_initialisation.R")
+# source("./01_COMPUTATION_R/source_initialisation.R")
 
 # xnm template files
 tpl <- list.files("./XNM/", full.names = TRUE, pattern = ".tpl") %>%  
@@ -18,7 +18,7 @@ tpl <- list.files("./XNM/", full.names = TRUE, pattern = ".tpl") %>%
    setNames(., "xnm")
 
 # 1 RUN ----
-for(ksite in k$ksite.v){ 
+ for(ksite in k$ksite.v[k$ksite.v%in%c(1:30)]){ 
    
    tpl_xnm   <- tpl$xnm
    tpl_input <- list()
@@ -26,6 +26,10 @@ for(ksite in k$ksite.v){
    # connect to database
    ksite_file<- path$files.v[ksite]
    con       <- odbcConnectAccess(ksite_file)
+   
+   # 10001 -----
+   tpl_input$"$10001" <- if(data$mana$water_regime[ksite] =="Irrigated"){ "1" 
+                           }else if(data$mana$water_regime[ksite] =="Rainfed"){ "0" }
    
    # 10011 -----
    interim <- sqlFetch(con, "BewegungStartWerte") %>% data.table %>% unique(., by = "Schichtnummer" ) %>% 
@@ -53,11 +57,13 @@ for(ksite in k$ksite.v){
       .[, c("Schichtnummer",  "ModellgroesseWasserRes", "Gesamtporenvolumen",
             "ModellgroesseAev", "ModellgroesseCampellB", "ModellgroesseVanGenuchtenAlpha",
             "ModellgroesseVanGenuchtenN")] %>% 
-      data.table(., "tau" =.5, "q" = 1, "r" = 2) %>% 
+      .[, ModellgroesseVanGenuchtenM := 1-1/ModellgroesseVanGenuchtenN] %>% 
+      .[, ModellgroesseCampellB := 7] %>% 
+      data.table(.,  "tau" =.5, "q" = 1, "r" = 2) %>% 
       apply(., 1, formatC) %>% t %>% 
       apply(., 1, function(x) paste(x, collapse = "\t")) %>% 
       paste(., collapse="\n")
-   
+
    # the replacement
    mapply(function(x, y) {
       tpl_xnm <<- str_replace(tpl_xnm, pattern = paste0("\\", y), replacement = x) 
@@ -65,7 +71,7 @@ for(ksite in k$ksite.v){
    }, x = tpl_input,
    y = names(tpl_input)) %>% invisible
    
-   # xnm is written to all 8 subfolders
+   # xnm is written to all subfolders provided
    file.path(path$PROJ_ROOT, k$kmodelktrait.v, "param", data$fnames$name_xnm[ksite])  %>% lapply(., writeLines, text = tpl_xnm) %>%  invisible
-   # odbcCloseAll()
+   odbcCloseAll()
 }# end ksite
