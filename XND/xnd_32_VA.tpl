@@ -124,7 +124,7 @@ number	per.horizon	wgt.%	wgt.%	wgt.%	wgt.%	kg/dm3	    Vol.%	1
 Layer	 Num.Layers 	WaterCont	MatrixPot	Soiltemp	NH4		NO3		Root.Density	
 number	 per.horizon 	Vol.%		kPa			°C			kg/ha	kg/ha	kg/dm3	
 				
-10011	010808	42	:Number of soil layers			
+10011	$DatumStart	42	:Number of soil layers			
 1	1	52	-99	10	8.7000	8.7000	-99
 2	1	52	-99	10	10.9500	10.950	-99
 3	2	52	-99	10	14.6000	14.600	-99

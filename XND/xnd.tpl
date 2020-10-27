@@ -45,7 +45,7 @@ Nr.	Bez.Variety	Sowing	Row-	Seed-	Plant	Emerge	Harvest	Date	max.Root.	max. Root.
 	Code		m		m		seed/m2	Datum	Datum	Datum	Datum	Datum		m
 
 10005	1	:Number of crops
-1	WH	$Sorte	$Saattiefe	$Reihenabstand	$Saatstaerke	$Saattermin 	$TerminAuflaufen	   $TerminErnteNutzung	-99		-99			$MaxDurchwurzelungstiefe			0
+1	WH		$Sorte		$Saattiefe		$Reihenabstand		$Saatstaerke		$Saattermin 		$TerminAuflaufen	   	$TerminErnteNutzung		-99			-99				$MaxDurchwurzelungstiefe			0
 ===================================================================================================================================
 MANAGEMENT DATA
 ===================================================================================================================================
@@ -60,8 +60,7 @@ $min_fert_table
 Date	Org_fertilizer	Org_fertilizer	DM		N		NH4-N	Org.Sub.
 Datum	Name		Code				kg/ha	kg/ha	kg/ha	kg/ha
 
-10007	$no_org_fert	:Number of ORGANIC Fertilizer Applications
-$org_fert_table
+10007	0	:Number of ORGANIC Fertilizer Applications
 =============================================================================
 *Soil Management
 Date	Depth	Equip.			Equip.

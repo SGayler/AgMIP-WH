@@ -12,7 +12,7 @@ tpl_input <- list()
 
 # 10000 ----
 # selects information of kth year
-tpl_input <-  sqlFetch(con, "Projekt")[kyear, c("DatumStart", "DatumEnde")]  
+tpl_input <-  sqlFetch(con, "Projekt") %>%  data.table %>% .[Projektname =="B0AMB"] %>% .[kyear, c("DatumStart", "DatumEnde")]  
    # 10001 and 10002----
 # *Farm Data
 # hard coded to "1", since identical
@@ -30,13 +30,14 @@ tpl_input$'xnc'  <- paste0(kmodel,".xnc")
 # ignored 
 # 10005 ----
 tpl_input <-  sqlFetch(con, "BewegungPflanzendaten") %>% data.table %>% 
-   .[ Saattermin %in% tpl_input$DatumStart, c("Sorte", "Saattiefe", "Reihenabstand", "Saatstaerke"
+   .[ Saattermin %between% c(tpl_input$DatumStart,tpl_input$DatumEnde), c("Sorte", "Saattiefe", "Reihenabstand", "Saatstaerke"
                                               ,"Saattermin", "TerminAuflaufen", "TerminErnteNutzung"
                                               , "MaxDurchwurzelungstiefe")] %>% 
    .[1] %>% 
    c(., tpl_input)
 
 # correct 
+tpl_input$Sorte         %<>% strtrim(., 10)
 tpl_input$Saattiefe     %<>% "/"(100)
 tpl_input$Reihenabstand %<>% "/"(100)
 tpl_input$MaxDurchwurzelungstiefe %<>% "/"(100)

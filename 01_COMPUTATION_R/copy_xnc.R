@@ -13,6 +13,6 @@
 # silent create subpaths for kmodels x ktraits 
 
 lapply(file.path(path$PROJ_ROOT, k$kmodelktrait.v), function(x){
-   list.files("./XNC/", full.names = TRUE, pattern = ".xnc") %>% file.copy(. 
-             , to = x, overwrite = TRUE)})
+   list.files("./XNC/", full.names = TRUE, pattern = ".xnc") %>% 
+      file.copy(., to = x, overwrite = TRUE)})
 message("copied xnc files to subfolders")

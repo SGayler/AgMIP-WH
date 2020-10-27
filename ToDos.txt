@@ -1,11 +1,11 @@
 ToDos
 
-0.   git "global step" einrichten
-1.   xnp's erstellen
-2.   xnd's für sites 31-34
-3a. gtp sites 31-34 zusammentragen
-3b. co2 levels in .gtp Dateien festlegen.
-3c. alle gtp Dateien erstellen
+0.   CHECK 				git "global step" einrichten
+1.   CHECK 				xnp's erstellen
+2.   CHECK 				xnd's für sites 31-34
+3a. CHECK				gtp sites 31-34 zusammentragen
+3b. CHECK 				co2 levels in .gtp Dateien festlegen.
+3c. CHECK 				alle gtp Dateien erstellen
 4.   4 xnc's zusammentragen (NG.xnc, NC.xnc, ....)
 5.   ? Pierres Korrekturen einbauen ?
 6.   Testen
