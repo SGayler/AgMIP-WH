@@ -11,7 +11,7 @@
 
 
 # 0 INITIALISE ----
-source("./01_COMPUTATION_R/source_initialisation.R")
+# source("./01_COMPUTATION_R/source_initialisation.R")
 
 
 # 1 LOAD ------ 

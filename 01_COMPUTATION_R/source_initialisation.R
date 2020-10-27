@@ -9,8 +9,12 @@
 # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+if(!is.logical(setup.query) | length(setup.query)!=1){
+   stop("setup.query must either be FALSE or TRUE")
+}
 
-rm(list = ls()); gc(); graphics.off()
+rm(list = ls() %>% grep(., pattern = "setup.query", value = TRUE, invert = TRUE)); gc(); graphics.off()
+
 
 # 0 LOAD ------ 
 # install packages not installed, else just load
@@ -24,12 +28,17 @@ if(!require("tibble")){install.packages("tibble"); library(tibble)}
 # initialise lists
 data <- path <- tpl <- k <- list()
 
+path$R_ROOT      <- "./01_COMPUTATION_R/"
 path$PROJ_ROOT   <- "./02_COMPUTATION_XN/"
 path$SOURCE_ROOT <- "./03_SOURCES/"
-path$R_ROOT      <- "./01_COMPUTATION_R/"
 path$GTP         <- "./GTP/"
 path$XNI         <- "./XNI/"
-path$modlib      <- "./modlib/"
+path$XNW         <- "./Wetterdateien/"
+path$XNC         <- "./XNC/"
+path$XND         <- "./XND/"
+path$XNP         <- "./XNP/"
+path$XNM         <- "./XNM/"
+
 if(!dir.exists(path$PROJ_ROOT )){dir.create(path$PROJ_ROOT)}
 # read data
 data$manag <- fread("./auxFiles/wheat_regions.csv")
@@ -46,13 +55,13 @@ path$files.v    <- list.files(path      = "./"
 tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(., c("xnd", as.character(31:34)))
 
 # initialise the loops
-k$kmodel.v   <- "NC" #c("NC", "NG", "NP", "NS")             # the four models
-k$kyear.v    <- 1:30               # 1:30             # the thirty years 1:30
-k$ksite.v    <- 1# 1:nrow(data$fnames)                   # the number of sites 1:34
+k$kmodel.v   <- "NC" #c("NC", "NG", "NP", "NS")          # the four models
+k$kyear.v    <- 1                                        # 1:30                # the thirty years 1:30
+k$ksite.v    <- c(2,25) # 1:nrow(data$fnames)                      # the number of sites 1:34
 k$krcpbase.v <- unique(data$treat$code_baseline_rcp)[1]  # the rcp and baseline scenarios
 k$kgcm.v     <- unique(data$treat$code_gcm)[1]           # the gcm scenarios
 k$ktrait.v   <- unique(data$treat$code_trait)[1]         # the simulated traits 
-k$year.v     <- k$kyear.v + 1980                      # the harvest years
+k$year.v     <- k$kyear.v + 1980                         # the harvest years
 row.names(data$fnames) <- 1:nrow(data$fnames)
 
 # 1 CREATE SUBFOLDERS 
@@ -69,5 +78,20 @@ lapply(file.path(path$PROJ_ROOT, k$kmodelktrait.v, "param"), function(x){
    file.copy(from = list.files("./XNM/", full.names = TRUE, pattern = ".xnm"), to = x, overwrite = TRUE)})
 
 
-# # 2 COPY XNC FILES
-source(file.path(path$R_ROOT, "copy_xnc.R"))
+# 2 CHECKS
+if(!(c("Irrigated", "Rainfed") %in% unique(data$manag$water_regime ) %>% all)){
+   stop("Water regime is ill-specified, has to be uniquely Irrgated or Rainged")
+}
+
+# 3 setup
+if(isTRUE(setup.query)){
+   
+   message("Setting up XNM files")
+   source(file.path(path$R_ROOT, "setup_xnm.R"))
+   message("Setting up XND files")
+   source(file.path(path$R_ROOT, "setup_xnd.R"))
+   message("Setting up XNP files")
+   source(file.path(path$R_ROOT, "setup_xnp.R"))
+   message("Setting up XNC files")
+   source(file.path(path$R_ROOT, "copy_xnc.R"))
+}
