@@ -23,4 +23,4 @@ list.files(path$PROJ_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".xnp"
 list.files(path$PROJ_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".xnm") %>%  unlink
 
 # 4 GTP
-list.files(path$PROJ_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".gtp") %>%  unlink
+list.files(path$PROJ_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".rfx") %>%  unlink
