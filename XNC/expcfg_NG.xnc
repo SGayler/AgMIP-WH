@@ -1,12 +1,12 @@
 [Expert-N Information]
-Info=_Modellauswahl für EXPERT-N vom 17.07.20 um 11:30:33
+Info=_Modellauswahl für EXPERT-N vom 27.10.20 um 18:33:50
 [Expert-N/DLL]
 Library=
 FunctionCount=0
 [Expert-N Configuration]
 Data Input=0
 Initialization=0
-Time Controlling=1
+Time Controlling=3
 Interception=0
 Runoff=0
 Pot. Evaporation=1

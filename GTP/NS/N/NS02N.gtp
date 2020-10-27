@@ -23,7 +23,7 @@ Pmax,340(kgCO2/ha/h) Eff(g/J)   rm(s/m)   CO2CmpPt(ppm)    Ci/Ca    PsCurveQ    
 -------------------------------------------------------------------------------
 2000010 2
 Default     40       0.6        110          38        0.7      0   0.0055
-TacupetoC2001-SW   40           0.7           110            38           0.7             0         0.001
+Bacanora   40           0.7           110            38           0.7             0         0.001
 -------------------------------------------------------------------------------
 Pmax-Temp Response (Temp [ C] vs. Pmax[ kgCO2/ha/h])
 The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
@@ -146,7 +146,7 @@ Development parameter for the SUCROS model
 -------------------------------------------------------------------------------
 2000037 2
 Default           0      1225        1           900
-TacupetoC2001-SW   2  1100     6  1400
+Bacanora   2  1100     6  1400
 ===============================================================================
 ONTOGENISIS - CANOPY FORMATION
 ===============================================================================
@@ -156,7 +156,7 @@ Section code/IDx=1
 -------------------------------------------------------------------------------
 2000040 2
 Default             1.0     0.3     2.0       26        425
-TacupetoC2001-SW   1    0    2   36  350
+Bacanora   1    0    2   36  350
 -------------------------------------------------------------------------------
 Specific leaf weight vs development stage    //Groot, 1987
 The first row:  Section code / Number of data sets
