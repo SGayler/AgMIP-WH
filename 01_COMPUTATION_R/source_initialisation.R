@@ -55,9 +55,9 @@ path$files.v    <- list.files(path      = "./"
 tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(., c("xnd", as.character(31:34)))
 
 # initialise the loops
-k$kmodel.v   <- "NC" #c("NC", "NG", "NP", "NS")          # the four models
+k$kmodel.v   <- c("NC", "NG", "NP", "NS")                # the four models
 k$kyear.v    <- 1                                        # 1:30                # the thirty years 1:30
-k$ksite.v    <- c(2,25) # 1:nrow(data$fnames)                      # the number of sites 1:34
+k$ksite.v    <- 1:nrow(data$fnames)                      # the number of sites 1:34
 k$krcpbase.v <- unique(data$treat$code_baseline_rcp)[1]  # the rcp and baseline scenarios
 k$kgcm.v     <- unique(data$treat$code_gcm)[1]           # the gcm scenarios
 k$ktrait.v   <- unique(data$treat$code_trait)[1]         # the simulated traits 

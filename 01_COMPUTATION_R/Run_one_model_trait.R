@@ -20,7 +20,7 @@ source("./01_COMPUTATION_R/source_initialisation.R")
 
 # RUN specific kmodel and ktrait combination
 # Here is the potential, to parallelise, requiring only one instance of R!!!!!
-kmodeltrait<- k$kmodelktrait.v[1]
+kmodeltrait<- k$kmodelktrait.v[4]
 
 # xni template files
 tpl      <- list.files("./XNI/", full.names = TRUE, pattern = "xni.tpl") %>%  lapply(., readLines) %>% setNames(., "xni")
