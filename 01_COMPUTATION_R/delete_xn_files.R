@@ -11,16 +11,16 @@
 # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 path <- list()
-path$PROJ_ROOT <- "./02_COMPUTATION_XN/"
+path$DELETE_ROOT <- "./02_COMPUTATION_XN/NC_N/"
 if(!require("magrittr")){install.packages("magrittr"); library(magrittr)}
 # 1 XND
-list.files(path$PROJ_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".xnd") %>%  unlink
+list.files(path$DELETE_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".xnd") %>%  unlink
 
 # 2 XNP
-list.files(path$PROJ_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".xnp") %>%  unlink
+list.files(path$DELETE_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".xnp") %>%  unlink
 
 # 3 XNM
-list.files(path$PROJ_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".xnm") %>%  unlink
+list.files(path$DELETE_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".xnm") %>%  unlink
 
-# 4 GTP
-list.files(path$PROJ_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".rfx") %>%  unlink
+# 4 result files
+list.files(path$DELETE_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".rf*|.bal|.mea|.log|.hp") %>%  unlink

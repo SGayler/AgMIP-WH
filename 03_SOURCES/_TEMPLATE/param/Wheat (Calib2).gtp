@@ -1,0 +1,398 @@
+Table A3.3 The species file - WHEAT.GTP (CERES)
+===============================================================================
+GENETIC AND ECOLOGICAL DESCRIPTION OF WHEAT
+===============================================================================
+Type	 Name(Code)	Ecotype    DaylengthType	LvAngleD  	PltH (Plant Height)
+-------------------------------------------------------------------------------
+2000001	1
+WH	 Wheat	        COOL       	  LDPs		 SPH	   	 100cm	
+-------------------------------------------------------------------------------
+Function Code
+Develop|Part|Photosyn|Maint|Growth|Canopy|Root|Wdem|Wupt|Wss|Ncnc|Ndem|Nupt|Nss|
+-------------------------------------------------------------------------------
+2000002	0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0
+===============================================================================
+PHOTOSYTHESIS RESPONSE
+-------------------------------------------------------------------------------
+Pmax,340(kgCO2/ha/h) Eff(g/J)   rm(s/m)   CO2CmpPt(ppm)    Ci/Ca    PsCurveQ	DaylengthCoeff (=P1D)
+-------------------------------------------------------------------------------
+2000010	10
+Default	40       0.6        110          38        0.7      0	0.0055
+HD2009	40       0.6        110          38        0.7      0	0.001
+Gamenya	40       0.6        110          38        0.7      0	0.004
+Arminda	40       0.6        110          38        0.7      0	0.0055
+Oasis	40       0.6        110          38        0.7      0	0.004
+Atlantis	40       0.6        110          38        0.7      0	0.0065
+YecoraRojo	40       0.7        110          38        0.7      0	0.001
+Bacanora88	40       0.6        110          38        0.7      0	0.004
+Nesser	40       0.6        110          38        0.7      0	0.004
+Apache      40       0.6        110          38        0.7      0   	0.004
+-------------------------------------------------------------------------------
+Pmax-Temp Response (Temp [ C] vs. Pmax[ kgCO2/ha/h])
+The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
+The second row: Temperature. The third row: P/Pmax
+If IDx=0 use Eq.(3.2.6), otherwise, IDx=No. of Data sets in the second and third
+row, the model uses the second and third row data
+-------------------------------------------------------------------------------
+2000011	0	0	22	35
+0	10	15	20	25	35
+0.0	0.3	0.6	1.0	1.0	0.0
+-------------------------------------------------------------------------------
+Pmax-Age Response (DVS [-] vs. Pmax - kgCO2/ha/h)
+The first row: section code/IDx
+The second row: development stage. The third row: P/Pmax
+If IDx=0 use Eq.(???), otherwise, IDx=No. of Data sets in the second and third
+row, the model uses the second and third row data
+-------------------------------------------------------------------------------
+2000012	3
+0	1	2
+1	1	0.5
+===============================================================================
+MAINTENANCE AND GROWTH
+===============================================================================
+Maintenance Respiration Coefficient (gCO2/g d) (SUCROS2,p18): Section code/ 1
+Leaves	 	Stems		Roots 		Storage Organs  		
+-------------------------------------------------------------------------------
+2000020	1
+  0.03		0.015		0.015		0.01
+****** (Penning deVries)
+  0.03		0.01		0.015		0.015-0.02
+-------------------------------------------------------------------------------
+Growth Respiration (gCO2/g dm) (Penning de Vries et al, 1989): Section code/ 1
+Leaves 	Stems		Roots 		Storage Organs  		
+-------------------------------------------------------------------------------
+2000021	1
+ 0.461		0.408		0.406			0.347
+-------------------------------------------------------------------------------
+Growth Efficiency (g CH2O/g dm) (Penning de Vries et al, 1989): Section code/ 1
+Leaves 		Stems		Roots 		Storage Organs  		
+-------------------------------------------------------------------------------
+2000022	1
+1.463		1.513		1.444		1.415
+===============================================================================
+PHENOLOGY - PHASIC DEVELOPMENT
+===============================================================================
+Development:Section code/1 PDD1,PDD2-pre- and post-anthesis physiol. dev. days
+		PDD1	PDD2	Vernaliz	Daylength	Optimal	iVernCoeff	Phyllochron
+				Requirement	Sensitivity	Daylenght	(=1/P1V)	PHINT
+-------------------------------------------------------------------------------
+2000030   5
+Default		38	25       	46	0.25     	20	30	95
+Winterweizen	38	25       	46	0.25     	20	30	95
+Sommerweizen	37	24       	0	0.25     	20	500	95
+Apache	    	41.37	25      	42.35	0.2487	21 	30       	92
+Bermude		40.8	24      	32.67	.1425	16.2	30	92
+Apache (Calib2)    	41.37	25      	42.35	0.2487	21 	30       	92
+Bermude (Calib2)	40.8	24      	32.67	.1425	16.2	30	92
+Apache-WW_(Phase3)    	33.5      	25         	46	0.15	18      	30       	92
+Bermude-WW_(Phase3)	35.5	24	46	0.25	20	30	92
+-------------------------------------------------------------------------------
+----------------------------------------------------------------
+Rdev,v (pre-anthesis dev. rate) - Temp Response (Temp - C, Rdev,v - 1/d)
+The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
+The second row: Temperature. The third row: Rdev,v values
+If IDx=0 use Eq.(3.2.6), otherwise, IDx=No. of Data sets in the second and third
+row, the model uses the second and third row data
+-------------------------------------------------------------------------------
+Apache: (Calib2)
+2000031	0	1.959	22.71	35.0
+0.0	5.0	10.0	15.0	20.0	24.0	35.0
+0.0	0.1	0.25	0.6	0.85	1.0	0.0
+Bermude: (Calib2)
+*******	0	1.267	24.5	35.0
+0.0	5.0	10.0	15.0	20.0	24.0	35.0
+0.0	0.1	0.25	0.6	0.85	1.0	0.0
+-------------------------------------------------------------------------------
+Rdev,r (post-anthesis dev. rate) - Temp Response (Temp - C, Rdev,r - 1/d)
+The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
+The second row: Temperature. The third row: Rdev,r values
+If IDx=0 use Eq.(3.2.6), otherwise, IDx=No. of Data sets in the second and third
+row, the model uses the second and third row data
+-------------------------------------------------------------------------------
+2000032	0	5	29	40
+5.0	10.0	15.0	20.0	25.0	29.0	40.0
+0.0	0.2	0.5	0.75	0.9	1.0	0.0
+-------------------------------------------------------------------------------
+Vernalization Rate-Temp Response (Temp - C, Vern. Rate - PVD )
+The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
+The second row: Temperature. The third row: Vern. rate values
+If IDx=0 use Eq.(3.2.6), otherwise, IDx=No. of Data sets in the second and third
+row, the model uses the second and third row data
+-------------------------------------------------------------------------------
+2000033	0	-1	2	15
+-------------------------------------------------------------------------------
+Rdev,v-photoperiod Response (PhotoP - hr; Rdev,r - 1/d)
+The first row: section code/IDx
+The second row: photoperiod. The third row: relative influence factors
+If IDx=0 use Eq.(3.2.25), otherwise, IDx=No. of Data sets in the second and third
+row, the model uses the second and third row data
+-------------------------------------------------------------------------------
+2000034	0
+-------------------------------------------------------------------------------
+The first row:  Section code / Number of data sets (0 or 1)
+The second row: internal development stage
+The third row: EC-Stadium
+-------------------------------------------------------------------------------
+2000035	1
+0.0	0.1425	0.39	0.6	0.656	0.91	1.0	1.115	1.5	1.95	2.0
+(10)	(20)	(30)	(32)	(40)	(50)	(60)	(70)	(80)	(90)	(92)
+-1_Blattentwicklung-2_Bestockung-3_Schossen-4_Entw.veg.PflanzenteileBisGrannenSichtbar
+-5_Ährenschieben-6_Blüte-7_Fruchtentwicklung-8_Fruchtreife-9Vollreife
+-------------------------------------------------------------------------------
+The following rows are required for the CERES model
+The first row: Development Rate
+The second row: Temp,max
+The third row: Temp,opt
+The forth row: Temp,base
+The fives row: Thermal Time
+The sixth row: max. (Development Stage)
+-------------------------------------------------------------------------------
+// Cubus (Kraichgau)
+2000036
+34	34	34	34	40	40	26	26	26
+26	26	26	26	29	29	17	17	17
+2	2	2	2	5	5	0	0	-1
+250	-99	-99	120	500	100	-99	-99	-99
+1	1	1	1	1	1	1	1	1
+(1)	(2)	(3)	(4)	(5)	(6)	(7)	(8)	(9)	
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+Development parameter for the SUCROS model
+	Tbase before anthesis, TScrit1 before anthesis, Tbase2 after anthesis, TScrit2 after anthesis
+-------------------------------------------------------------------------------
+2000037	17
+Default	0	1225	1	900
+Bermude	  2      1300        4           660
+Apache	  1      1345        4           660
+Achill	0	1125	0	1000
+Orestis	0	1100	1	900
+Greif	0	1100	1	1000
+Ramiro	0	1100	1	1000
+Bussard	0	1225	0	900
+Cubus	0	1225	1	900
+Arminda	1	1450	1.5	750
+HD2009	1	1020	5	850
+Gamenya 	1	1050	2	850
+Oasis	1	980	2	650
+YecoraRojo	1.8	983.64	5.88	599.13
+Bacanora88	2.342	1269.	4.965	814.2
+Nesser	1.0	1250.8	5.60	825.7
+Apache-WW	1      	1450        	4           620
+Apache-WW (Phase 3) 1      	1345        	4           660
+===============================================================================
+ONTOGENISIS - CANOPY FORMATION
+===============================================================================
+Section code/IDx=1
+		MaxLvInitRate  MaxLvAppRate   TillerDem  Grains/g stem   SpecLeafWeight
+		(Primodia/d)   	(Leaves/d)               (=G1)    		 (kg/ha leaf)
+-------------------------------------------------------------------------------
+2000040	5
+Default	1.0	 0.3	2.0	      26	 	425
+Winterweizen	1.0 	 0.3	2.0	      26	 	425
+Sommerweizen	1.0 	 0.3	2.0	      25	 	500
+Apache	1.0	 0.0	2.0	36	425
+Bermude 	1.0	 0.0	2.0	36	425
+Apache-WW (SPASS) 1.0	 0.0	2.0	36	425
+Bermude-WW (SPASS) 1.0	 0.0	2.0	36	425
+Apache-WW (SUCROS) 1.0	 0.0	2.0	26	425
+
+-------------------------------------------------------------------------------
+Specific leaf weight vs development stage    //Groot, 1987
+The first row:  Section code / Number of data sets
+The second row: development stages (VR-Stage)
+The third row:  relative influence factor (multiplication factor)
+-------------------------------------------------------------------------------
+2000041	0
+	0.0	1.0	2.0
+	1.0	0.91	1.33
+-------------------------------------------------------------------------------
+Leaf Appearance rate-Temp Response (Temp - C, Lf. App. Rate - Leaves/d )
+The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
+The second row: Temperatures. The third row: leaf appearance rate values
+If IDx=0 use Eq.(3.2.6), otherwise, IDx=No. of Data sets in the second and third
+row, the model uses the second and third row data
+-------------------------------------------------------------------------------
+2000042	0	0	22	35
+===============================================================================
+ASSIMILATE PARTITIONING
+In each section the data are arranged as:
+The first row:  Section code / number of data sets
+The second row: development stages (VR-stage value)
+The third row:  partitioning factors
+===============================================================================
+Root	
+-------------------------------------------------------------------------------
+2000050		5
+0.0	0.33	0.53	1.0	2.0
+0.6	0.5	0.3	0.0	0.0		
+-------------------------------------------------------------------------------
+Leaves
+-------------------------------------------------------------------------------
+2000051		10
+0.0	0.33	0.43	0.53	0.62	0.77	0.95	1.14	1.38	2.0
+0.9	0.8	0.7	0.7	0.56	0.2	0.09	0.05	0.0	0.0
+-------------------------------------------------------------------------------
+Stems
+-------------------------------------------------------------------------------
+2000052		10
+0.0	0.33	0.43	0.53	0.62	0.77	0.95	1.14	1.38	2.0
+0.1	0.2	0.3	0.3	0.44	0.8	0.64	0.42	0.0	0.0
+-------------------------------------------------------------------------------
+Storage
+-------------------------------------------------------------------------------
+2000053	0
+0.0
+0.0
+===============================================================================
+STORAGE GROWTH AND RESERVE TRANSLOCATION
+===============================================================================
+Section code / IDx=1
+Variety		ReservRatio	 RelResvGrwRate	MaxStorageGrwRate (=G2)  Storage N cum Rate
+										(Max Grain Filling Rate)  	
+	(Resv/Wst)     	(1/d)	(mg/grain.d)		(mgN/grain/d)
+-------------------------------------------------------------------------------
+2000060	16
+Default		0.4	0.01	2.5 	0.055
+Winterweizen	0.4	0.01	2.5 	0.055
+Sommerweizen	0.4	0.01	3.5 	0.055
+Arminda		0.4	0.01	2.85 	0.055
+Atlantis		0.4	0.01	2.0 	0.055
+Bacanora88		0.4	0.01	3.52	0.055
+Gamenya 		0.4	0.01	2.5 	0.055
+Greif		0.4	0.01	2.75 	0.055
+HD2009 		0.4	0.01	3.25 	0.055
+Oasis		0.4	0.01	3.85	0.055
+Orestis		0.4	0.01	2.75 	0.055
+Nesser		0.4	0.01	3.0	0.055
+Star		0.4	0.01	3.0 	0.055
+SW-Minaret		0.4	0.01	3.5 	0.055
+YecoraRoj		0.4	0.01	1.8 	0.055
+Apache		0.4	0.01	3.0 	0.025
+Apache-WW (SPASS) 	0.4	0.01	3.0 	0.025
+Oasis(SPASS)	0.4	0.01	3.5	0.055
+-------------------------------------------------------------------------------
+Storage Growth Rate vs Temperature (Grain Filling Rate-mg/grain.d)
+(Potential growth rate of individual grains in dependence of temperature)
+The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
+The second row: Temperatures. The third row: Storage Growth Rate
+If IDx=0 use Eq.(3.2.6), otherwise, IDx=No. of Data sets in the second and third
+row, the model uses the second and third row data
+-------------------------------------------------------------------------------
+2000061	0	0	24	35
+8.0	12.5	15.5	18.5	27.5
+0.0	0.91	1.31	1.45	1.52
+-------------------------------------------------------------------------------
+Potential N accumulation rate (mg/d.grain)
+The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
+The second row: Temperatures. The third row: Storage N accumulation rate
+If IDx=0 use Eq.(3.2.6), otherwise, IDx=No. of Data sets in the second and third
+row, the model uses the second and third row data
+-------------------------------------------------------------------------------
+2000062	5	0	24	35
+8.0	12.5	18.5	27.5	35.0
+0.0	0.022	0.029	0.032	0.032
+===============================================================================
+NITROGEN CONCENTRATION
+In each section the data are arranged as:
+The first row:  Section code / number of data sets
+The second row: development stages (VR-stage value)
+The third row:  nitrogen concentration in kg/kg
+===============================================================================
+Leaf optimum N concentration 	
+-------------------------------------------------------------------------------
+Apache-WW
+2000070 3
+0.00   1.00   2.0
+0.05  0.03  0.014
+-------------------------------------------------------------------------------
+Stem optimum N concentration 	
+-------------------------------------------------------------------------------
+Apache-WW
+2000071	4
+0.00    0.30    1.00   2.00
+0.05  0.040  0.012 0.004		
+-------------------------------------------------------------------------------
+Root optimum N concentration 	
+-------------------------------------------------------------------------------
+2000072	2
+0.00   2.00
+0.02   0.01
+-------------------------------------------------------------------------------
+Leaf minimum N concentration 	
+-------------------------------------------------------------------------------
+2000073	2
+0.00    2.0
+0.005	0.005
+-------------------------------------------------------------------------------
+Stem minimum N concentration 	
+-------------------------------------------------------------------------------
+2000074	2
+0.00    2.0
+0.0015	0.0015
+-------------------------------------------------------------------------------
+Root minimum N concentration 	
+-------------------------------------------------------------------------------
+2000075	2
+0.00    2.0
+0.001	0.001
+===============================================================================
+ROOT GROWTH AND ACTIVITY
+===============================================================================
+Section code/IDx=1
+MaxExtRate	Lens/g   MaxWuptRate 	MaxNuptRate	   	 	MaxDepth
+  (cm/d)    	 (cm/g)    (cm3/cm.d)          (kg/ha.d)/(m/m2)          	 (cm)
+-------------------------------------------------------------------------------
+Arminda,Bacanora, Nesser
+2000080 1
+2.0     1.05E4     0.03	0.006	200
+-------------------------------------------------------------------------------
+Oasis, Gamenya, HD2009, YecoraRojo
+******* 1
+3.0     1.05E4     0.03	0.009	200
+-------------------------------------------------------------------------------
+Root extension rate -Temp  (0-1)
+The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
+The second row: Temperatures. The third row: relative influence factor (0-1)
+If IDx=0 use Eq.(3.2.6), otherwise, IDx=No. of Data sets in the second and third
+row, the model uses the second and third row data
+-------------------------------------------------------------------------------
+2000081	7	0	25	40
+0.0   5.0    10.0    15.0    20.0    25.0    35.0
+0.0   0.15     0.35     0.75     1.0     1.0     0.0
+-------------------------------------------------------------------------------
+Moisture reduction factor for root extension (0-1)
+The first row: section code/IDx=number of data sets
+The second row: Soil moisture. The third row: relative influence factor (0-1)
+The model uses the second and third row data to get a reduction factor
+-------------------------------------------------------------------------------
+2000082	7
+0.0   0.025    0.05    0.1    0.2    0.3    0.4
+0.0   0.2      0.35    0.5    0.7    0.85   1.0
+===============================================================================
+Plant Senescence
+===============================================================================
+Section code / IDx=1
+Begin Senescence VR-Stage   Begin Shading LAI	
+-------------------------------------------------------------------------------
+2000090	1
+  1.0		 			  4.0
+-------------------------------------------------------------------------------
+Relative Death Rate - Temp  (Leaves)
+The first row: section code/IDx=number of data sets
+The second row: Temperature. The third row: relative death rate (1/d)
+The model uses the second and third row data to get relative death rate
+-------------------------------------------------------------------------------
+2000091	6
+-0.1	   5	  10    15	 30	40
+ 0.02  0.02  0.02  0.02  0.02  0.04
+-------------------------------------------------------------------------------
+Relative Death Rate - Temp  (Roots)
+The first row: section code/IDx=number of data sets
+The second row: Temperature. The third row: relative death rate (1/d)
+The model uses the second and third row data to get relative death rate
+-------------------------------------------------------------------------------
+2000092	6	
+-0.1	5	 10   	15	30   40
+ 0.02  0.02  0.02  0.02  0.02  0.02
+===============================================================================

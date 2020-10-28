@@ -1,0 +1,124 @@
+GECROS INPUT PARAMETERS (user specified parameter values)
+==============================================================================
+==============================================================================
+Markers for using user specified values to parameterize GECROS
+;80001 crop type specification
+;80002 - 80004 crop type specific parameters
+;80005 - 80006 genotype specific parameters
+;80007 - 80008 default and sensitivity parameters
+;80009 - 80010 soil parameters
+==============================================================================
+==============================================================================
+Crop Type
+------------------------------------------------------------------------------
+legume     C3/C4    determinate    short-/long-day     lodging   vernalisation
++1/-1      +1/-1       +1/-1           +1/-1            +1/-1        +1/-1
+------------------------------------------------------------------------------
+80001
+-1   +1   +1   -1   -1   1
+------------------------------------------------------------------------------
+==============================================================================
+Vegetative and Generative Biomass
+------------------------------------------------------------------------------
+ veg.biom.      veg.biom.    germin.    seed biomass composition fractions
+growth effic.  carbon frac.  effic.    lipids  lignin  org.acids  minerals
+ [g C g-1 C]    [g C g-1]   [-]      [-]    [-]       [-]       [-]
+------------------------------------------------------------------------------
+80002
+.81         .48         .25         .02     .06        .02  .02
+------------------------------------------------------------------------------
+==============================================================================
+Morphology and Phenology
+------------------------------------------------------------------------------
+leaf   stem dry   max.root      temperature response curve for phenology
+width   weight     depth         base   optimum   ceiling   curvature
+ [m]  [g m-2 m-1]  [cm]          [°C]     [°C]      [°C]      [-]
+------------------------------------------------------------------------------
+80003
+.01      460.0      150.0         1		25	37	0.7
+------------------------------------------------------------------------------
+==============================================================================
+Nitrogen
+------------------------------------------------------------------------------
+  maximal      minimal   minimal   minimal   initial   specific    N fixation
+  N-uptake     root N    stem N    leaf N    leaf N    leaf area     cost
+[g N m-2 d-1] [g N g-1] [g N g-1] [g N m-2] [g N g-1]  [m2 g-1]    [g C g-1 N]
+------------------------------------------------------------------------------
+80004
+ 0.50     0.005    0.008   0.425    0.05   0.0233   6.0
+------------------------------------------------------------------------------
+SLA: 0.022 Yin & van Laar GECROS
+SLA: 0.24-0.48 Danalatos et al. 1994 Agronomie The chang in the specific leaf area of maize..
+==============================================================================
+Photoperiod and Photosynthesis
+------------------------------------------------------------------------------
+inclination of  Dev.Stage   Dev.Stage  activation  slope   slope   convex.for
+sun angle for  at start of  at end of   energy of  VCMAX   VJMAX   light resp.
+photoperiodic   photosens.  photosens.   JMAX       vs.     vs.     electron
+  daylength      phase        phase               leaf N  leaf N   transport
+  [degree]        [-]          [-]     [J mol-1]  [umol s-1 g-1 N]   [-]
+------------------------------------------------------------------------------
+80005
+   -2.0         .20     .55         48270.0      60.0   120.0     .70
+------------------------------------------------------------------------------
+==============================================================================
+Genotype Parameters
+------------------------------------------------------------------------------
+  Seed     Seed N     Leaf angle   Max.crop  Min. thermal days of  Photoperiod
+ weight     conc.   frm.horizontal  height   veg. & reprod. phase  sensitivity
+[g seed-1] [g N g-1]   [degree]       [m]      [d]       [d]          [h-1]
+------------------------------------------------------------------------------
+80006
+0.045   0.024   50   1   62	39	0.1
+------------------------------------------------------------------------------
+==============================================================================
+Default Parameters Values of rather high uncertainty
+------------------------------------------------------------------------------
+    Fraction of sigmoid         Dev.Stage of seed number     Critical root
+  curve inflexion in entire      determining period for      weight density
+height and seed growth period    indeterminate crops
+ [-]        [-]                        [-]               [g m-2 cm-1 depth]
+------------------------------------------------------------------------------
+80007
+.9          .4                        1.4                   .25
+------------------------------------------------------------------------------
+==============================================================================
+Parameters for sensitivity-analysis options
+------------------------------------------------------------------------------
+   Ambient         Factors for change in             Initial fraction in shoot
+  CO2 conc.   radiation  temperature  vapour press.       C         N
+[umol mol-1]    [-]         [°C]        [-]          [g C g-1 C] [g N g-1 N]
+------------------------------------------------------------------------------
+ Seed N from    Factor N conc. of seed fill   Dev.Stage of fastest transition
+non-struct. N        initial      final      from initial to final factor
+     [-]              [-]          [-]             [-]
+------------------------------------------------------------------------------
+80008
+    385.00      1.0          1.0        5.0         .50         .62
+    .7              .75             1.0             1.5
+------------------------------------------------------------------------------
+==============================================================================
+Soil parameters I
+------------------------------------------------------------------------------
+Soil     Min.    Plant    Soil    upper   time constant for  Decomp.   Decomp.
+Clay    Water    Water   profile  soil    dynamics of soil    rate      rate
+frac.  Content  Capacity  depth   depth   temp.    transf.  microbes   humus
+ [%]     [-]     [mm]     [cm]    [cm]     [d]      [d]      [yr-1]    [yr-1]
+------------------------------------------------------------------------------
+;80009
+23.4    0.05     375.0    150.0    25.0     4.0      1.0       0.66      0.02
+------------------------------------------------------------------------------
+==============================================================================
+Soil parameters II
+------------------------------------------------------------------------------
+Fraction  Ratio decomp. Decomposition rates   Soil total  Initial   Frac. of
+leaf to   to resistant   of plant materials   organic C    value     BIO in
+ litter    plant mat.  decomposable  resistant   TOC      BIO+HUM  initial TOC
+  [-]        [-]     [g C m-2 d-1][g C m-2 d-1][g C m-2] [g C m-2]    [-]
+------------------------------------------------------------------------------
+;80010
+  1.0       1.44         10.0         0.3        7193.0     3500.0    0.03
+------------------------------------------------------------------------------
+==============================================================================
+End of xnm-file
+==============================================================================

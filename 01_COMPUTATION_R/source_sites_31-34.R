@@ -20,8 +20,8 @@ tpl_input$DatumEnde  <- ymd(data$manag[ksite]$date_maturity) + years(kyear) + mo
 
 # 10003 ----
 # $Name    string of 6:  ModelCode (w/o N) Site RCP GCM Trait
-tpl_input$'Name' <- paste0(str_remove(kmodel,pattern = "N"), sprintf("%02d",ksite),krcpbase, kgcm, ktrait)
-tpl_input$'xnw'  <- data$fnames[ksite][[paste0(krcpbase,kgcm)]]
+tpl_input$'Name' <- paste0(str_remove(kmodel,pattern = "N"), sprintf("%02d",ksite),krcpgcm, ktrait)
+tpl_input$'xnw'  <- data$fnames[ksite][[krcpgcm]]
 tpl_input$'xnm'  <- data$fnames[ksite, name_xnm]
 tpl_input$'xnc'  <- paste0(kmodel,".xnc")
 
