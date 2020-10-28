@@ -28,55 +28,51 @@ for(kmodel in k$kmodel.v){
       }
       
       for(kyear in k$kyear.v){ 
-         for(krcpbase in k$krcpbase.v){ 
-            for(kgcm in k$kgcm.v){ 
-               test <- paste0(krcpbase, kgcm) %in% c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")
-               if(test){
-                  for(ktrait in k$ktrait.v){ 
-                     
-                     # 1a CONNECT ------
-                     # to i'th database
-                     if(ksite%in%1:30){
-                        source("./01_COMPUTATION_R/source_sites_1-30.R")
-
-                     } else if(ksite%in%31:34){
-                        source("./01_COMPUTATION_R/source_sites_31-34.R")
-                     } else{
-                        stop("ksite out of bounds (1-34")
-                     }
-                     
-                     # 1b.1 Reformatting  Time ----
-                     # reformat times to XN3 format | HIGHLY VERBOSE
-                     tpl_input$Saattermin        %<>% ymd %>% format(., "%d%m%y")
-                     tpl_input$TerminAuflaufen   %<>% ymd %>% format(., "%d%m%y")
-                     tpl_input$TerminErnteNutzung%<>% ymd %>% format(., "%d%m%y")
-                     tpl_input$DatumStart        %<>% ymd %>% format(., "%d%m%y")
-                     tpl_input$DatumEnde         %<>% ymd %>% format(., "%d%m%y")
-                     
-                     # 1b.2 Reformatting  list names ----
-                     tpl_input        <- lapply(tpl_input, format)
-                     names(tpl_input) <- paste0("$", names(tpl_input))
-                     # the replacement
-                     mapply(function(x, y) {
-                        tpl_xnd <<- str_replace(tpl_xnd, pattern = paste0("\\", y), replacement = x) 
-                        
-                     }, x = tpl_input,
-                     y = names(tpl_input)) %>% invisible
-                     
-                     rm(tpl_input)
- 
-                     
-                     writeLines(con = paste0(path$PROJ_ROOT,paste(kmodel,ktrait, sep = "_"),"/", str_remove(kmodel, pattern = "N"), sprintf("%02d", ksite),krcpbase, kgcm, ktrait,"_", k$year.v[kyear], ".xnd")
-                                , text = tpl_xnd)
-                     
-                     
-                  }# end ktrait  
+         for(krcpgcm in k$krcpgcm.v){ 
+            
+            for(ktrait in k$ktrait.v){ 
+               
+               # 1a CONNECT ------
+               # to i'th database
+               if(ksite%in%1:30){
+                  source("./01_COMPUTATION_R/source_sites_1-30.R")
+                  
+               } else if(ksite%in%31:34){
+                  source("./01_COMPUTATION_R/source_sites_31-34.R")
+               } else{
+                  stop("ksite out of bounds (1-34")
                }
-            }# end kgcm 
-         }# end krcpbase
+               
+               # 1b.1 Reformatting  Time ----
+               # reformat times to XN3 format | HIGHLY VERBOSE
+               tpl_input$Saattermin        %<>% ymd %>% format(., "%d%m%y")
+               tpl_input$TerminAuflaufen   %<>% ymd %>% format(., "%d%m%y")
+               tpl_input$TerminErnteNutzung%<>% ymd %>% format(., "%d%m%y")
+               tpl_input$DatumStart        %<>% ymd %>% format(., "%d%m%y")
+               tpl_input$DatumEnde         %<>% ymd %>% format(., "%d%m%y")
+               
+               # 1b.2 Reformatting  list names ----
+               tpl_input        <- lapply(tpl_input, format)
+               names(tpl_input) <- paste0("$", names(tpl_input))
+               # the replacement
+               mapply(function(x, y) {
+                  tpl_xnd <<- str_replace(tpl_xnd, pattern = paste0("\\", y), replacement = x) 
+                  
+               }, x = tpl_input,
+               y = names(tpl_input)) %>% invisible
+               
+               rm(tpl_input)
+               
+               
+               writeLines(con = paste0(path$PROJ_ROOT,paste(kmodel,ktrait, sep = "_"),"/", str_remove(kmodel, pattern = "N"), sprintf("%02d", ksite),krcpgcm, ktrait,"_", k$year.v[kyear], ".xnd")
+                          , text = tpl_xnd)
+               
+               
+            }# end ktrait  
+         }# end krcpgcm
       }# end kyear  
       odbcCloseAll()
    }# end ksite
 }# end kmodel  
 
-message(kmodel, sprintf("%02d",ksite), krcpbase, kgcm, ktrait)
+message(kmodel, sprintf("%02d",ksite), krcpgcm, ktrait)

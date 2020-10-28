@@ -13,9 +13,6 @@ if(!is.logical(setup.query) | length(setup.query)!=1){
    stop("setup.query must either be FALSE or TRUE")
 }
 
-rm(list = ls() %>% grep(., pattern = "setup.query", value = TRUE, invert = TRUE)); gc(); graphics.off()
-
-
 # 0 LOAD ------ 
 # install packages not installed, else just load
 if(!require("RODBC")){install.packages("RODBC"); library(RODBC)}
@@ -24,6 +21,8 @@ if(!require("stringr")){install.packages("stringr"); library(stringr)}
 if(!require("lubridate")){install.packages("lubridate"); library(lubridate)}
 if(!require("data.table")){install.packages("data.table"); library(data.table)}
 if(!require("tibble")){install.packages("tibble"); library(tibble)}
+
+rm(list = ls() %>% grep(., pattern = "setup.query", value = TRUE, invert = TRUE)); gc(); graphics.off()
 
 # initialise lists
 data <- path <- tpl <- k <- list()
@@ -55,13 +54,13 @@ path$files.v    <- list.files(path      = "./"
 tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(., c("xnd", as.character(31:34)))
 
 # initialise the loops
-k$kmodel.v   <- c("NC", "NG", "NP", "NS")                # the four models
-k$kyear.v    <- 1                                        # 1:30                # the thirty years 1:30
+k$kmodel.v   <- "NC" # c("NC", "NG", "NP", "NS")         # the four models
+k$kyear.v    <- 1:2#15:25                                    # 1:30                # the thirty years 1:30
 k$ksite.v    <- 1:nrow(data$fnames)                      # the number of sites 1:34
-k$krcpbase.v <- unique(data$treat$code_baseline_rcp)[1]  # the rcp and baseline scenarios
-k$kgcm.v     <- unique(data$treat$code_gcm)[1]           # the gcm scenarios
+k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[1:2]
 k$ktrait.v   <- unique(data$treat$code_trait)[1]         # the simulated traits 
-k$year.v     <- k$kyear.v + 1980                         # the harvest years
+# hard set for AgMiP WHEAT Pahse 4
+k$year.v     <- 1981:2010                                # the harvest years
 row.names(data$fnames) <- 1:nrow(data$fnames)
 
 # 1 CREATE SUBFOLDERS 
