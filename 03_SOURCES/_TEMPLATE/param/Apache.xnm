@@ -1,0 +1,131 @@
+=============================================================================
+==============================================================================
+GECROS INPUT PARAMETERS (user specified parameter values)
+==============================================================================
+==============================================================================
+Markers for using user specified values to parameterize GECROS
+;80001 crop type specification
+;80002 - 80004 crop type specific parameters
+;80005 - 80006 genotype specific parameters
+;80007 - 80008 default and sensitivity parameters
+;80009 - 80010 soil parameters
+==============================================================================
+==============================================================================
+Crop Type
+------------------------------------------------------------------------------
+legume     C3/C4    determinate    short-/long-day     lodging   vernalisation
+------------------------------------------------------------------------------
+80001
+-1	+1	+1	-1	-1	1
+------------------------------------------------------------------------------
+==============================================================================
+Vegetative and Generative Biomass
+------------------------------------------------------------------------------
+ veg.biom.      veg.biom.    germin.    seed biomass composition fractions
+growth effic.  carbon frac.  effic.    lipids  lignin  org.acids  minerals
+ [g C g-1 C]    [g C g-1]	[-]	     [-]    [-]       [-]       [-]
+ YGV		CFV		EG	FFAT	FLIG	FOAC	 FMIN
+------------------------------------------------------------------------------
+80002
+.8100000	.4800000	.750000	.02000000	.06000000	.02000000	.02000000
+------------------------------------------------------------------------------
+==============================================================================
+Morphology and Phenology
+------------------------------------------------------------------------------
+leaf   stem dry   max.root      temperature response curve for phenology
+width   weight     depth         base   optimum   ceiling   curvature
+ [m]  [g m-2 m-1]  [cm]          [�C]     [�C]      [�C]      [-]
+LWIDTH	CDMHT	RDMX		 TBD	  TOD       TCD	      TSEN*
+------------------------------------------------------------------------------
+80003
+          0.01            460            120       1.074168       22.11027       37.74056      0.5
+------------------------------------------------------------------------------
+==============================================================================
+Nitrogen
+------------------------------------------------------------------------------
+  maximal      minimal   minimal   minimal   initial   specific    N fixation
+  N-uptake     root N    stem N    leaf N    leaf N    leaf area     cost
+[g N m-2 d-1] [g N g-1] [g N g-1] [g N m-2] [g N g-1]  [m2 g-1]    [g C g-1 N]
+NUPTX*		RNCMIN	STEMNC	   SLNMIN	LNCI	SLA0	    (CCFIX)
+------------------------------------------------------------------------------
+80004
+           0.5          0.005    0.009376371      0.3676884           0.05     0.02409923              6
+------------------------------------------------------------------------------
+==============================================================================
+Photoperiod and Photosynthesis
+------------------------------------------------------------------------------
+inclination of  Dev.Stage   Dev.Stage  activation  slope   slope   convex.for
+sun angle for  at start of  at end of   energy of  VCMAX   VJMAX   light resp.
+photoperiodic   photosens.  photosens.   JMAX       vs.     vs.     electron
+  daylength      phase        phase               leaf N  leaf N   transport
+  [degree]        [-]          [-]     [J mol-1]  [umol s-1 g-1 N]   [-]
+  (INSP)	SPSP*	    EPSP*	EAJMAX	   XVN	    XJN	    (THETA)
+------------------------------------------------------------------------------
+80005
+-2.0000000	.200000000	.700000000	47000.000000	28.380000	56.760000	.7000000000
+------------------------------------------------------------------------------
+==============================================================================
+Genotype Parameters
+------------------------------------------------------------------------------
+  Seed     Seed N     Leaf angle   Max.crop  Min. thermal days of  Photoperiod
+ weight     conc.   frm.horizontal  height   veg. & reprod. phase  sensitivity
+[g seed-1] [g N g-1]   [degree]       [m]      [d]       [d]          [h-1]
+SEEDW	   SEEDNC	BLD	    HTMX     MTDV	MTDR		PSEN
+------------------------------------------------------------------------------
+80006
+         0.045     0.02355174             50              1       75       68.57473     -0.0233533
+------------------------------------------------------------------------------
+==============================================================================
+Default Parameters Values of rather high uncertainty
+------------------------------------------------------------------------------
+    Fraction of sigmoid         Dev.Stage of seed number     Critical root
+  curve inflexion in entire      determining period for      weight density
+height and seed growth period    indeterminate crops
+ [-]        [-]                        [-]               [g m-2 cm-1 depth]
+ PMEH*	   PMES*		      ESDI*			(WRB)
+------------------------------------------------------------------------------
+80007
+.50000000	.50000000		1.35000		.2500
+------------------------------------------------------------------------------
+==============================================================================
+Parameters for sensitivity-analysis options
+------------------------------------------------------------------------------
+   Ambient         Factors for change in             Initial fraction in shoot
+  CO2 conc.   radiation  temperature  vapour press.       C         N
+[umol mol-1]    [-]         [�C]        [-]          [g C g-1 C] [g N g-1 N]
+CO2A		COEFR	COEFT		COEFV		(FCRSH)	 (FNRSH)
+------------------------------------------------------------------------------
+ Seed N from    Factor N conc. of seed fill   Dev.Stage of fastest transition
+non-struct. N        initial      final      from initial to final factor
+     [-]              [-]          [-]             [-]
+PNPRE*		      CB	   CX	       	   TM
+------------------------------------------------------------------------------
+80008
+390.0000	1.000000	1.000000	5.000000	.590600000	.555000000
+    .8000000		.800000		1.06670		1.50000
+------------------------------------------------------------------------------
+==============================================================================
+Soil parameters I
+------------------------------------------------------------------------------
+Soil     Min.    Plant    Soil    upper   time constant for  Decomp.   Decomp.
+Clay    Water    Water   profile  soil    dynamics of soil    rate      rate
+frac.  Content  Capacity  depth   depth   temp.    transf.  microbes   humus
+ [%]     [-]     [mm]     [cm]    [cm]     [d]      [d]      [yr-1]    [yr-1]
+------------------------------------------------------------------------------
+;80009
+23.4    0.05     375.0    150.0    25.0     4.0      1.0       0.66      0.02
+------------------------------------------------------------------------------
+==============================================================================
+Soil parameters II
+------------------------------------------------------------------------------
+Fraction  Ratio decomp. Decomposition rates   Soil total  Initial   Frac. of
+leaf to   to resistant   of plant materials   organic C    value     BIO in
+ litter    plant mat.  decomposable  resistant   TOC      BIO+HUM  initial TOC
+  [-]        [-]     [g C m-2 d-1][g C m-2 d-1][g C m-2] [g C m-2]    [-]
+------------------------------------------------------------------------------
+;80010
+  1.0       1.44         10.0         0.3        7193.0     3500.0    0.03
+------------------------------------------------------------------------------
+==============================================================================
+End of xnm-file
+==============================================================================
