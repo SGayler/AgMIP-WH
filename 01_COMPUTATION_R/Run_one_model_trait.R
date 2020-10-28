@@ -10,22 +10,30 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # 0 INITIALISE ----
+query      <- list()
 
-# FALSE, no XN3 input files are created
-# TRUE,     XN3 input files are created. 
-setup.query <- TRUE
+query$all  <- TRUE    # TRUE: all made new 
+                      # NULL: queries are used 
+                      # FALSE: none are updated
 
+query$xnp  <- TRUE    # TRUE: xnp is made new
+query$xnd  <- FALSE   # TRUE: xnd is made new
+query$xnm  <- TRUE    # TRUE: xnm is made new
+query$base_only <- TRUE
 # load and source the setup
 source("./01_COMPUTATION_R/source_initialisation.R")
 
 # RUN specific kmodel and ktrait combination
-# Here is the potential, to parallelise, requiring only one instance of R!!!!!
-kmodeltrait<- k$kmodelktrait.v[1]
+kmodeltrait <- "NC_N"
 
 # xni template files
-tpl      <- list.files("./XNI/", full.names = TRUE, pattern = "xni.tpl") %>%  lapply(., readLines) %>% setNames(., "xni")
+tpl         <- list.files("./XNI/", full.names = TRUE, pattern = "xni.tpl") %>%  lapply(., readLines) %>% setNames(., "xni")
 # get the xnp of the kmodeltrait combination
-k$kxnp.v <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = ".xnp")
+k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = ".xnp")
+
+if(isTRUE(query$run_base_only <- TRUE)){
+   k$kxnp.v <-  k$kxnp.v[ str_detect(k$kxnp.v, pattern = "0-", negate = FALSE) ]
+}
 
 # 1 RUN ----
 path$ProjectDir <- file.path(getwd(), str_remove(path$PROJ_ROOT, "./"), kmodeltrait)

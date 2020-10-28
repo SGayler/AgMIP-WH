@@ -9,7 +9,7 @@
 # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-if(!is.logical(setup.query) | length(setup.query)!=1){
+if(all(!is.logical(unlist(query)))){
    stop("setup.query must either be FALSE or TRUE")
 }
 
@@ -22,7 +22,7 @@ if(!require("lubridate")){install.packages("lubridate"); library(lubridate)}
 if(!require("data.table")){install.packages("data.table"); library(data.table)}
 if(!require("tibble")){install.packages("tibble"); library(tibble)}
 
-rm(list = ls() %>% grep(., pattern = "setup.query", value = TRUE, invert = TRUE)); gc(); graphics.off()
+rm(list = ls() %>% grep(., pattern = "query", value = TRUE, invert = TRUE)); gc(); graphics.off()
 
 # initialise lists
 data <- path <- tpl <- k <- list()
@@ -83,14 +83,26 @@ if(!(c("Irrigated", "Rainfed") %in% unique(data$manag$water_regime ) %>% all)){
 }
 
 # 3 setup
-if(isTRUE(setup.query)){
-   
+#all
+if(isTRUE(query$all)){
+   query %<>%  lapply(., function(x) return(TRUE))
+}
+#xnm
+if(isTRUE(query$xnm)){
    message("Setting up XNM files")
-   source(file.path(path$R_ROOT, "setup_xnm.R"))
+   source(file.path(path$R_ROOT, "setup_xnm.R")) 
+}
+#xnd
+if(isTRUE(query$xnd)){
    message("Setting up XND files")
    source(file.path(path$R_ROOT, "setup_xnd.R"))
+}
+#xnp
+if(isTRUE(query$xnp)){
    message("Setting up XNP files")
    source(file.path(path$R_ROOT, "setup_xnp.R"))
-   message("Setting up XNC files")
-   source(file.path(path$R_ROOT, "copy_xnc.R"))
 }
+
+message("copying XNC files")
+source(file.path(path$R_ROOT, "copy_xnc.R"))
+
