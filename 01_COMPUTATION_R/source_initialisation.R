@@ -57,8 +57,8 @@ tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(
 k$kmodel.v   <- "NP" # c("NC", "NG", "NP", "NS")         # the four models
 k$kyear.v    <- 1:30#15:25                                    # 1:30                # the thirty years 1:30
 k$ksite.v    <- 1:nrow(data$fnames)                      # the number of sites 1:34
-k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[1:2]
-k$ktrait.v   <- unique(data$treat$code_trait)[1:2]         # the simulated traits 
+k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[3:11]
+k$ktrait.v   <- unique(data$treat$code_trait)[1]         # the simulated traits 
 # hard set for AgMiP WHEAT Pahse 4
 k$year.v     <- 1981:2010                                # the harvest years
 row.names(data$fnames) <- 1:nrow(data$fnames)
