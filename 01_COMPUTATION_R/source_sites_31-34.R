@@ -12,8 +12,8 @@ tpl_input <- list()
 
 # 10000 ----
 # selects information of kth year
-tpl_input$DatumStart <- ymd(data$manag[ksite]$date_sowing) + years(kyear)
-tpl_input$DatumEnde  <- ymd(data$manag[ksite]$date_maturity) + years(kyear) + months(1)
+tpl_input$DatumStart <- ymd(data$manag[ksite]$date_sowing) + years(kyear-1)
+tpl_input$DatumEnde  <- ymd(data$manag[ksite]$date_maturity) + years(kyear-1) + months(1)
 
 # 10001 and 10002----
 # in .tpl
