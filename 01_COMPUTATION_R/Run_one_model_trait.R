@@ -10,16 +10,17 @@
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 # 0 INITIALISE ----
-query      <- list()
+query         <- list()
+   
+query$all     <- FALSE   # TRUE: all made new 
+                         # NULL: queries are used and selected input files created
+                         # FALSE: none are updated
+   
+query$xnp     <- TRUE    # TRUE: xnp is made new
+query$xnd     <- FALSE   # TRUE: xnd is made new
+query$xnm     <- TRUE    # TRUE: xnm is made new
 
-query$all  <- TRUE    # TRUE: all made new 
-                      # NULL: queries are used 
-                      # FALSE: none are updated
-
-query$xnp  <- TRUE    # TRUE: xnp is made new
-query$xnd  <- FALSE   # TRUE: xnd is made new
-query$xnm  <- TRUE    # TRUE: xnm is made new
-query$base_only <- TRUE
+run_base_only <- TRUE
 # load and source the setup
 source("./01_COMPUTATION_R/source_initialisation.R")
 
@@ -27,11 +28,11 @@ source("./01_COMPUTATION_R/source_initialisation.R")
 kmodeltrait <- "NC_N"
 
 # xni template files
-tpl         <- list.files("./XNI/", full.names = TRUE, pattern = "xni.tpl") %>%  lapply(., readLines) %>% setNames(., "xni")
+tpl         <- list.files(path$XNI, full.names = TRUE, pattern = "xni.tpl") %>%  lapply(., readLines) %>% setNames(., "xni")
 # get the xnp of the kmodeltrait combination
 k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = ".xnp")
 
-if(isTRUE(query$run_base_only <- TRUE)){
+if(isTRUE(run_base_only <- TRUE)){
    k$kxnp.v <-  k$kxnp.v[ str_detect(k$kxnp.v, pattern = "0-", negate = FALSE) ]
 }
 
