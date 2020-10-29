@@ -126,7 +126,7 @@ YIELDnum <- as.numeric(rfp.dt$YIELD)/1000
    # SIM   
       bp <<- boxplot(abs(SIM_61_dt) ~ climate +site, col = viridis::viridis(length(unique(climate))),
                      axes = F, ylab = "", xlab = "", ylim = c(0,360)
-                     , main = "ANTHESIS_NP")
+                     , main = paste("ANTHESIS",kmodelktrait))
    })
    # OBS
    points( OBS_ant~ xplot, col = "black", cex = 1.2, pch = 16)
@@ -150,7 +150,7 @@ YIELDnum <- as.numeric(rfp.dt$YIELD)/1000
    # SIM
       bp <<- boxplot(abs(SIM_92_dt) ~ climate +site, col = viridis::viridis(length(unique(climate))),
                      axes = F, ylab = "", xlab = "", ylim = c(0,360)
-                     , main = "MATURITY_NP")
+                     , main = paste("MATURITY",kmodelktrait))
    })
    # OBS
    points( OBS_mat ~ xplot, col = "black", cex = 1.2, pch = 16)
@@ -173,7 +173,7 @@ YIELDnum <- as.numeric(rfp.dt$YIELD)/1000
       # SIM
       bp <<- boxplot(YIELDnum ~ climate +site, col = viridis::viridis(length(unique(climate))),
                      axes = F, ylab = "", xlab = "", ylim = c(0,20)
-                     , main = "YIELD_NP")
+                     , main = paste("YIELD",kmodelktrait))
    })
 
    axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
