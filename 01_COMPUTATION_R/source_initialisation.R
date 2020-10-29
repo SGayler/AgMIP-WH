@@ -21,6 +21,8 @@ if(!require("stringr")){install.packages("stringr"); library(stringr)}
 if(!require("lubridate")){install.packages("lubridate"); library(lubridate)}
 if(!require("data.table")){install.packages("data.table"); library(data.table)}
 if(!require("tibble")){install.packages("tibble"); library(tibble)}
+if(!require("stringi")){install.packages("stringi"); library(stringi)}
+if(!require("viridis")){install.packages("viridis"); library(viridis)}
 
 rm(list = ls() %>% grep(., pattern = "query", value = TRUE, invert = TRUE)); gc(); graphics.off()
 
@@ -56,9 +58,9 @@ path$files.v    <- list.files(path      = "./"
 tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(., c("xnd", as.character(31:34)))
 
 # initialise the loops
-k$kmodel.v   <- "NG" # c("NC", "NG", "NP", "NS")         # the four models
+k$kmodel.v   <- "NC" # c("NC", "NG", "NP", "NS")         # the four models
 k$kyear.v    <- 1:30#15:25                                    # 1:30                # the thirty years 1:30
-k$ksite.v    <- 31:34                      # the number of sites 1:34, k$ksite.v    <- 1:nrow(data$fnames)
+k$ksite.v    <- 1:34                      # the number of sites 1:34, k$ksite.v    <- 1:nrow(data$fnames)
 k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[1:1]
 k$ktrait.v   <- unique(data$treat$code_trait)[1]         # the simulated traits 
 # hard set for AgMiP WHEAT Pahse 4

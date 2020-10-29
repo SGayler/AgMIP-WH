@@ -22,7 +22,7 @@ source("./01_COMPUTATION_R/source_initialisation.R")
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NC_N"
+kmodelktrait <- "NP_N"
 #
 #
 #
@@ -78,6 +78,7 @@ pb <- txtProgressBar(min = 0, max = nrow(rfp.dt), style = 3)
 
 rfp.dt$SIM_61_DATE <- rep("NAN", nrow(rfp.dt))
 rfp.dt$SIM_92_DATE <- rep("NAN", nrow(rfp.dt))
+rfp.dt$YIELD       <- rep("NAN", nrow(rfp.dt))
 
 for(i in 1:nrow(rfp.dt)){
    
@@ -87,6 +88,8 @@ for(i in 1:nrow(rfp.dt)){
    # assign
    rfp.dt$SIM_61_DATE[i] <- int.dt$V1[which.min(abs(int.dt$V2 - data$BBCH$anthesis))] 
    rfp.dt$SIM_92_DATE[i] <- int.dt$V1[which.min(abs(int.dt$V2 - data$BBCH$maturity))] 
+   rfp.dt$YIELD[i] <- max(int.dt$V8) 
+   
    setTxtProgressBar(pb, i)
 }; close(pb)
 
@@ -102,6 +105,9 @@ rfp.dt[, SIM_92_dt := difftime(SIM_92_DATE,date_sowing, units = "day") %>% as.in
 
 rfp.dt[site==26, SIM_61_dt := SIM_61_dt+365]
 rfp.dt[site==26, SIM_92_dt := SIM_92_dt+365]
+
+#convert to numbers
+YIELDnum <- as.numeric(rfp.dt$YIELD)/1000
 
 # PLOT
 {
@@ -120,7 +126,7 @@ rfp.dt[site==26, SIM_92_dt := SIM_92_dt+365]
    # SIM   
       bp <<- boxplot(abs(SIM_61_dt) ~ climate +site, col = viridis::viridis(length(unique(climate))),
                      axes = F, ylab = "", xlab = "", ylim = c(0,360)
-                     , main = "ANTHESIS")
+                     , main = "ANTHESIS_NP")
    })
    # OBS
    points( OBS_ant~ xplot, col = "black", cex = 1.2, pch = 16)
@@ -144,7 +150,7 @@ rfp.dt[site==26, SIM_92_dt := SIM_92_dt+365]
    # SIM
       bp <<- boxplot(abs(SIM_92_dt) ~ climate +site, col = viridis::viridis(length(unique(climate))),
                      axes = F, ylab = "", xlab = "", ylim = c(0,360)
-                     , main = "MATURITY")
+                     , main = "MATURITY_NP")
    })
    # OBS
    points( OBS_mat ~ xplot, col = "black", cex = 1.2, pch = 16)
@@ -156,6 +162,26 @@ rfp.dt[site==26, SIM_92_dt := SIM_92_dt+365]
    mtext("DAS [d]", 2, line = 4, cex = 2)
    legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::viridis(length(unique(rfp.dt$climate))), cex = 2)
 
+   box()
+
+   
+   # PLOT YIELD
+   
+   windows(height = 10, width = 20, xpos = 400)
+   par(oma = c(3,3,1,1))
+   with(rfp.dt, {
+      # SIM
+      bp <<- boxplot(YIELDnum ~ climate +site, col = viridis::viridis(length(unique(climate))),
+                     axes = F, ylab = "", xlab = "", ylim = c(0,20)
+                     , main = "YIELD_NP")
+   })
+
+   axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
+   axis(2, at = seq(0,20,2), cex.axis = 1.5)
+   mtext("site"   , 1, line = 4, cex = 2)
+   mtext("Yield [t/ha]", 2, line = 4, cex = 2)
+   legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::viridis(length(unique(rfp.dt$climate))), cex = 2)
+   
    box()
 }
 
