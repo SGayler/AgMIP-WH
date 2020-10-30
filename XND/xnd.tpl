@@ -9,7 +9,7 @@ $DatumStart 	$DatumEnde
 *Farm Data
 10001
 *FarmID	No.Plots	Latitude	Longitude	Altitude
-1	1		1		$Breitengrad		$Laengengrad		$Hoehelage
+1	1		$Breitengrad		$Laengengrad		$Hoehelage
 *LastName	FirstName	Street
 Phase	Wheat4 Calvados	 Region Normandie	
 *PLZ	City		Tel.	Fax.
