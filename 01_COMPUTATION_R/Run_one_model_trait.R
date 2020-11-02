@@ -12,7 +12,7 @@
 # 0 INITIALISE ----
 query         <- list()
    
-query$all     <- TRUE   # TRUE: all made new 
+query$all     <- FALSE   # TRUE: all made new 
                          # NULL: queries are used and selected input files created
                          # FALSE: none are updated
    
@@ -34,9 +34,9 @@ tpl         <- list.files(path$XNI, full.names = TRUE, pattern = "xni.tpl") %>% 
 #alle Sites:
 k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = ".xnp")
 
-#ausgewaehlte Sites:
-#query$pattern <- c(30:34)    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
-#k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = paste0(paste0(query$pattern, ".*.xnp"), collapse = "|")) %>% grep(k$kxnp.v , pattern = ".xnp", value = TRUE )
+# ausgewaehlte Sites:
+query$pattern <- c(30:34)    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
+k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = paste0(paste0(query$pattern, ".*.xnp"), collapse = "|")) %>% grep(k$kxnp.v , pattern = ".xnp", value = TRUE )
 
 
 if(isTRUE(run_base_only <- TRUE)){
