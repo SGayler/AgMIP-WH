@@ -9,6 +9,7 @@
 # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+
 # 0 INITIALISE ----
 query      <- list()
 
@@ -22,7 +23,7 @@ source("./01_COMPUTATION_R/source_initialisation.R")
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NP_N"
+kmodelktrait <- "NG_N"
 #
 #
 #
@@ -79,6 +80,7 @@ pb <- txtProgressBar(min = 0, max = nrow(rfp.dt), style = 3)
 rfp.dt$SIM_61_DATE <- rep("NAN", nrow(rfp.dt))
 rfp.dt$SIM_92_DATE <- rep("NAN", nrow(rfp.dt))
 rfp.dt$YIELD       <- rep("NAN", nrow(rfp.dt))
+rfp.dt$ABVBM       <- rep("NAN", nrow(rfp.dt))
 
 for(i in 1:nrow(rfp.dt)){
    
@@ -88,7 +90,8 @@ for(i in 1:nrow(rfp.dt)){
    # assign
    rfp.dt$SIM_61_DATE[i] <- int.dt$V1[which.min(abs(int.dt$V2 - data$BBCH$anthesis))] 
    rfp.dt$SIM_92_DATE[i] <- int.dt$V1[which.min(abs(int.dt$V2 - data$BBCH$maturity))] 
-   rfp.dt$YIELD[i] <- max(int.dt$V8) 
+   rfp.dt$YIELD[i]       <- max(int.dt$V8) 
+   rfp.dt$ABVBM[i]       <- max(int.dt$V7) 
    
    setTxtProgressBar(pb, i)
 }; close(pb)
@@ -100,14 +103,16 @@ rfp.dt$SIM_92_DATE <- sprintf("%06d", as.numeric(rfp.dt$SIM_92_DATE)) %>%  dmy
 # convert to time
 rfp.dt$date_sowing  <- ymd(rfp.dt$date_sowing) + years(rfp.dt$int - 1981)
 
-rfp.dt[, SIM_61_dt := difftime(SIM_61_DATE,date_sowing, units = "day") %>% as.integer]
-rfp.dt[, SIM_92_dt := difftime(SIM_92_DATE,date_sowing, units = "day") %>% as.integer]
+rfp.dt[, SIM_61_dt := difftime(SIM_61_DATE, date_sowing, units = "day") %>% as.integer]
+rfp.dt[, SIM_92_dt := difftime(SIM_92_DATE, date_sowing, units = "day") %>% as.integer]
 
 rfp.dt[site==26, SIM_61_dt := SIM_61_dt+365]
 rfp.dt[site==26, SIM_92_dt := SIM_92_dt+365]
 
 #convert to numbers
-YIELDnum <- as.numeric(rfp.dt$YIELD)/1000
+rfp.dt$YIELD<- as.numeric(rfp.dt$YIELD)/1000
+rfp.dt$ABVBM<- as.numeric(rfp.dt$ABVBM)/1000
+rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
 
 # PLOT
 {
@@ -137,9 +142,6 @@ YIELDnum <- as.numeric(rfp.dt$YIELD)/1000
    mtext("site"   , 1, line = 4, cex = 2)
    mtext("DAS [d]", 2, line = 4, cex = 2)
    legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::viridis(length(unique(rfp.dt$climate))), cex = 2)
-   
-   
-   
    box()
    
    # PLOT MATURITY
@@ -168,10 +170,10 @@ YIELDnum <- as.numeric(rfp.dt$YIELD)/1000
    # PLOT YIELD
    
    windows(height = 10, width = 20, xpos = 400)
-   par(oma = c(3,3,1,1))
+   par(oma = c(3, 3, 1, 1))
    with(rfp.dt, {
       # SIM
-      bp <<- boxplot(YIELDnum ~ climate +site, col = viridis::viridis(length(unique(climate))),
+      bp <<- boxplot(YIELD ~ climate +site, col = viridis::viridis(length(unique(climate))),
                      axes = F, ylab = "", xlab = "", ylim = c(0,20)
                      , main = paste("YIELD",kmodelktrait))
    })
@@ -181,6 +183,25 @@ YIELDnum <- as.numeric(rfp.dt$YIELD)/1000
    mtext("site"   , 1, line = 4, cex = 2)
    mtext("Yield [t/ha]", 2, line = 4, cex = 2)
    legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::viridis(length(unique(rfp.dt$climate))), cex = 2)
+   
+   box()
+   
+   # PLOT HI
+   
+   windows(height = 10, width = 20, xpos = 400)
+   par(oma = c(3, 3, 1, 1))
+   with(rfp.dt, {
+      # SIM
+      bp <<- boxplot(HI ~ climate + site, col = viridis::viridis(length(unique(climate))),
+                     axes = F, ylab = "", xlab = "", ylim = c(0.2,.8)
+                     , main = paste("Harvest Index", kmodelktrait))
+   })
+   abline(h = .63, col = "red")
+   axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
+   axis(2, at = seq(.2,.8,.1), cex.axis = 1.5)
+   mtext("site"   , 1, line = 4, cex = 2)
+   mtext("Yield [t/ha]", 2, line = 4, cex = 2)
+   legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::magma(length(unique(rfp.dt$climate))), cex = 2)
    
    box()
 }

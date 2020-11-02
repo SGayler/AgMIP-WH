@@ -11,7 +11,8 @@
 # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 path <- list()
-path$DELETE_ROOT <- "./02_COMPUTATION_XN/NC_N/"
+path$DELETE_ROOT <- "./02_COMPUTATION_XN/NG_N/"
+
 if(!require("magrittr")){install.packages("magrittr"); library(magrittr)}
 # 1 XND
 list.files(path$DELETE_ROOT, full.names = TRUE, recursive = TRUE, pattern = ".xnd") %>%  unlink
