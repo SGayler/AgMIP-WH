@@ -9,6 +9,7 @@
 # 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
+
 # 0 INITIALISE ----
 query      <- list()
 
@@ -22,7 +23,7 @@ source("./01_COMPUTATION_R/source_initialisation.R")
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NP_N"
+kmodelktrait <- "NG_N"
 #
 #
 #

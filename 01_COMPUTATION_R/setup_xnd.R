@@ -18,6 +18,8 @@
 tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(., c("xnd", as.character(31:34)))
 
 # 1 RUN ----
+pb  <- txtProgressBar(min = 0, max = k$pb_length, style = 3)
+k$k <-0
 
 for(kmodel in k$kmodel.v){ 
    for(ksite in k$ksite.v){ 
@@ -67,7 +69,8 @@ for(kmodel in k$kmodel.v){
                writeLines(con = paste0(path$PROJ_ROOT,paste(kmodel,ktrait, sep = "_"),"/", str_remove(kmodel, pattern = "N"), sprintf("%02d", ksite),krcpgcm, ktrait,"_", k$year.v[kyear], ".xnd")
                           , text = tpl_xnd)
                
-               
+               k$k <- k$k + 1
+               setTxtProgressBar(pb, k$k)      
             }# end ktrait  
          }# end krcpgcm
       }# end kyear  

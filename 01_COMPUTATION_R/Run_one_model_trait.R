@@ -12,7 +12,7 @@
 # 0 INITIALISE ----
 query         <- list()
    
-query$all     <- NULL   # TRUE: all made new 
+query$all     <- TRUE   # TRUE: all made new 
                          # NULL: queries are used and selected input files created
                          # FALSE: none are updated
    
@@ -25,7 +25,7 @@ run_base_only <- TRUE
 source("./01_COMPUTATION_R/source_initialisation.R")
 
 # RUN specific kmodel and ktrait combination
-kmodeltrait <- "NP_N"
+kmodeltrait <- "NG_N"
 
 # xni template files
 tpl         <- list.files(path$XNI, full.names = TRUE, pattern = "xni.tpl") %>%  lapply(., readLines) %>% setNames(., "xni")
