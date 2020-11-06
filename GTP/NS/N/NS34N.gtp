@@ -23,7 +23,7 @@ Pmax,340(kgCO2/ha/h) Eff(g/J)   rm(s/m)   CO2CmpPt(ppm)    Ci/Ca    PsCurveQ    
 -------------------------------------------------------------------------------
 2000010 2
 Default     40       0.6        110          38        0.7      0   0.0055
-Wakunei   40          0.67           110            38           0.7             0        0.0055
+Wakanui   40          0.67           110            38           0.7             0        0.0055
 -------------------------------------------------------------------------------
 Pmax-Temp Response (Temp [ C] vs. Pmax[ kgCO2/ha/h])
 The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
@@ -146,7 +146,7 @@ Development parameter for the SUCROS model
 -------------------------------------------------------------------------------
 2000037 2
 Default           0      1225        1           900
-Wakunei   0  1225     1   900
+Wakanui   3           1560              5            600
 ===============================================================================
 ONTOGENISIS - CANOPY FORMATION
 ===============================================================================
@@ -156,7 +156,7 @@ Section code/IDx=1
 -------------------------------------------------------------------------------
 2000040 2
 Default             1.0     0.3     2.0       26        425
-Wakunei   1    0    2   32  490
+Wakanui   1    0    2   32  490
 -------------------------------------------------------------------------------
 Specific leaf weight vs development stage    //Groot, 1987
 The first row:  Section code / Number of data sets

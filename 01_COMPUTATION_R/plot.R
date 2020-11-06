@@ -23,7 +23,7 @@ source("./01_COMPUTATION_R/source_initialisation.R")
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NG_N"
+kmodelktrait <- "NS_N"
 #
 #
 #
@@ -124,7 +124,7 @@ rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
    xplot     <- (length(unique(rfp.dt$climate))*xplot+1)/length(unique(rfp.dt$climate))
    
    # PLOT ANTHESIS
-   windows(height = 10, width = 20, xpos = 400)
+   windows(height = 6, width = 10, xpos = 50)
    par(oma = c(3,3,1,1))
    
    with(rfp.dt, {
@@ -146,7 +146,7 @@ rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
    
    # PLOT MATURITY
    
-   windows(height = 10, width = 20, xpos = 400)
+   windows(height = 6, width = 10, xpos = 900)
    par(oma = c(3,3,1,1))
    with(rfp.dt, {
    # SIM
@@ -167,43 +167,43 @@ rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
    box()
 
    
-   # PLOT YIELD
-   
-   windows(height = 10, width = 20, xpos = 400)
-   par(oma = c(3, 3, 1, 1))
-   with(rfp.dt, {
-      # SIM
-      bp <<- boxplot(YIELD ~ climate +site, col = viridis::viridis(length(unique(climate))),
-                     axes = F, ylab = "", xlab = "", ylim = c(0,20)
-                     , main = paste("YIELD",kmodelktrait))
-   })
-
-   axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
-   axis(2, at = seq(0,20,2), cex.axis = 1.5)
-   mtext("site"   , 1, line = 4, cex = 2)
-   mtext("Yield [t/ha]", 2, line = 4, cex = 2)
-   legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::viridis(length(unique(rfp.dt$climate))), cex = 2)
-   
-   box()
-   
-   # PLOT HI
-   
-   windows(height = 10, width = 20, xpos = 400)
-   par(oma = c(3, 3, 1, 1))
-   with(rfp.dt, {
-      # SIM
-      bp <<- boxplot(HI ~ climate + site, col = viridis::viridis(length(unique(climate))),
-                     axes = F, ylab = "", xlab = "", ylim = c(0.2,.8)
-                     , main = paste("Harvest Index", kmodelktrait))
-   })
-   abline(h = .63, col = "red")
-   axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
-   axis(2, at = seq(.2,.8,.1), cex.axis = 1.5)
-   mtext("site"   , 1, line = 4, cex = 2)
-   mtext("Yield [t/ha]", 2, line = 4, cex = 2)
-   legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::magma(length(unique(rfp.dt$climate))), cex = 2)
-   
-   box()
+#   # PLOT YIELD
+#   
+#   windows(height = 10, width = 20, xpos = 400)
+#   par(oma = c(3, 3, 1, 1))
+#   with(rfp.dt, {
+#      # SIM
+#      bp <<- boxplot(YIELD ~ climate +site, col = viridis::viridis(length(unique(climate))),
+#                     axes = F, ylab = "", xlab = "", ylim = c(0,20)
+#                     , main = paste("YIELD",kmodelktrait))
+#   })
+#
+#   axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
+#   axis(2, at = seq(0,20,2), cex.axis = 1.5)
+#   mtext("site"   , 1, line = 4, cex = 2)
+#   mtext("Yield [t/ha]", 2, line = 4, cex = 2)
+#   legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::viridis(length(unique(rfp.dt$climate))), cex = 2)
+#   
+#   box()
+#   
+#   # PLOT HI
+#   
+#   windows(height = 10, width = 20, xpos = 400)
+#   par(oma = c(3, 3, 1, 1))
+#   with(rfp.dt, {
+#      # SIM
+#      bp <<- boxplot(HI ~ climate + site, col = viridis::viridis(length(unique(climate))),
+#                     axes = F, ylab = "", xlab = "", ylim = c(0.2,.8)
+#                     , main = paste("Harvest Index", kmodelktrait))
+#   })
+#   abline(h = .63, col = "red")
+#   axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
+#   axis(2, at = seq(.2,.8,.1), cex.axis = 1.5)
+#   mtext("site"   , 1, line = 4, cex = 2)
+#   mtext("Yield [t/ha]", 2, line = 4, cex = 2)
+#   legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::magma(length(unique(rfp.dt$climate))), cex = 2)
+#   
+#   box()
 }
 
 # rfp.dt[SIM_61_dt<0]

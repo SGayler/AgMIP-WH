@@ -9,7 +9,7 @@ $DatumStart 	$DatumEnde
 *Farm Data
 10001
 *FarmID	No.Plots	Latitude	Longitude	Altitude
-1	1		1		49.204		-0.453		67
+1	1		49.204		-0.453		67
 *LastName	FirstName	Street
 ROTS	Département Calvados	 Region Normandie	
 *PLZ	City		Tel.	Fax.
