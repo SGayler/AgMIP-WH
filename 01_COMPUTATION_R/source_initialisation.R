@@ -58,7 +58,7 @@ path$files.v    <- list.files(path      = "./"
 tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(., c("xnd", as.character(31:34)))
 
 # initialise the loops
-k$kmodel.v   <- "NS" # c("NC", "NG", "NP", "NS")         # the four models
+k$kmodel.v   <- "NP" # c("NC", "NG", "NP", "NS")         # the four models
 k$kyear.v    <- 1:30#15:25                               # 1:30                # the thirty years 1:30
 k$ksite.v    <- 1:34                                     # the number of sites 1:34, k$ksite.v    <- 1:nrow(data$fnames)
 k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[1:11]

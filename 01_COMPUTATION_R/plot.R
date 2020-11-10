@@ -23,7 +23,7 @@ source("./01_COMPUTATION_R/source_initialisation.R")
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NS_N"
+kmodelktrait <- "NP_N"
 #
 #
 #

@@ -25,7 +25,7 @@ run_base_only <- FALSE
 source("./01_COMPUTATION_R/source_initialisation.R")
 
 # RUN specific kmodel and ktrait combination
-kmodeltrait <- "NS_N"
+kmodeltrait <- "NP_N"
 
 # xni template files
 tpl         <- list.files(path$XNI, full.names = TRUE, pattern = "xni.tpl") %>%  lapply(., readLines) %>% setNames(., "xni")
