@@ -35,9 +35,9 @@ tpl         <- list.files(path$XNI, full.names = TRUE, pattern = "xni.tpl") %>% 
 k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = ".xnp")
 
 # ausgewaehlte Sites: ,"130","140","150","160","310","320","330","340""
-#query$pattern <- c("130","140","150","160","310","320","330","340")    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
+query$pattern <- c("33I")    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
 #query$pattern <- c(NULL)    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
-query$pattern <- c(k$krcpgcm.v)    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
+#query$pattern <- c(k$krcpgcm.v)    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
 k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = paste0(paste0(query$pattern, ".*.xnp"), collapse = "|")) %>% grep(k$kxnp.v , pattern = ".xnp", value = TRUE )
 
 
