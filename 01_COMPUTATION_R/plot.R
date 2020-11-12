@@ -24,7 +24,7 @@ query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgc
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NS_N"
+kmodelktrait <- "NP_N"
 #
 #
 #
