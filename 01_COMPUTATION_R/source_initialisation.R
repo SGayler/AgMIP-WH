@@ -61,7 +61,7 @@ tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(
 k$kmodel.v   <- "NP" # c("NC", "NG", "NP", "NS")         # the four models
 k$kyear.v    <- 1:30#15:25                               # 1:30                # the thirty years 1:30
 k$ksite.v    <- 1:34                                     # the number of sites 1:34, k$ksite.v    <- 1:nrow(data$fnames)
-k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[1:11]
+k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[1:1]
 k$ktrait.v   <- unique(data$treat$code_trait)[1]         # the simulated traits 
 k$pb_length  <- lapply(k, length) %>% unlist %>% prod    # length of the progressbar
 # hard set for AgMiP WHEAT Pahse 4

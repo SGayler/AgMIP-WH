@@ -16,11 +16,11 @@ query$all     <- FALSE   # TRUE: all made new
                          # NULL: queries are used and selected input files created
                          # FALSE: none are updated
    
-query$xnp     <- TRUE    # TRUE: xnp is made new
-query$xnd     <- TRUE   # TRUE: xnd is made new
-query$xnm     <- TRUE    # TRUE: xnm is made new
+query$xnp     <- FALSE    # TRUE: xnp is made new
+query$xnd     <- FALSE   # TRUE: xnd is made new
+query$xnm     <- FALSE    # TRUE: xnm is made new
 
-run_base_only <- FALSE
+run_base_only <- TRUE
 # load and source the setup
 source("./01_COMPUTATION_R/source_initialisation.R")
 
@@ -34,8 +34,8 @@ tpl         <- list.files(path$XNI, full.names = TRUE, pattern = "xni.tpl") %>% 
 #alle Sites:
 k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = ".xnp")
 
-# ausgewaehlte Sites: ,"130","140","150","160","310","320","330","340""
-query$pattern <- c("33I")    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
+# ausgewaehlte Sites: ,"130","140","150","160","310","320","330","340"
+query$pattern <- c("020","310","340")    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
 #query$pattern <- c(NULL)    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
 #query$pattern <- c(k$krcpgcm.v)    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
 k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = paste0(paste0(query$pattern, ".*.xnp"), collapse = "|")) %>% grep(k$kxnp.v , pattern = ".xnp", value = TRUE )

@@ -23,7 +23,7 @@ Pmax,340(kgCO2/ha/h) Eff(g/J)   rm(s/m)   CO2CmpPt(ppm)    Ci/Ca    PsCurveQ    
 -------------------------------------------------------------------------------
 2000010 2
 Default     40       0.6        110          38        0.7      0   0.0055
-Bacanora   40           0.7           110            38           0.7             0         0.001
+Bacanora   40           0.6           110            38           0.7             0         0.007
 -------------------------------------------------------------------------------
 Pmax-Temp Response (Temp [ C] vs. Pmax[ kgCO2/ha/h])
 The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
@@ -73,7 +73,7 @@ Development:Section code/1 PDD1,PDD2-pre- and post-anthesis physiol. dev. days
 -------------------------------------------------------------------------------
 2000030 2
 Default	    38        25         46       0.25          20      30      95
-Bacanora   46            44             0          0.01            20           450         108.8
+Bacanora   34.365         29.58             0         0.321            21         211.1         120.3
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 Rdev,v (pre-anthesis dev. rate) - Temp Response (Temp - C, Rdev,v - 1/d)
@@ -134,9 +134,9 @@ The sixth row: max. (Development Stage)
 // Sortenparameter eingesetzt:
 2000036
 34  34  34  34  40  40  26  26  26
- 30.5         30.5         30.5         30.5           30           30           17           17           17
- 2  2  2  2  5  5  0  0 -1
- 241   -99   -99   200  1250   100   -99   -99   -99
+ 26  26  26  29  29  29  17  17  17
+ 0.5         0.5         0.5         3.2         3.2         3.2           0           0          -1
+ 230.7           -99           -99         147.5         582.5           100           -99           -99           -99
 1   1   1   1   1   1   1   1   1
 (1) (2) (3) (4) (5) (6) (7) (8) (9)
 -------------------------------------------------------------------------------
@@ -156,7 +156,7 @@ Section code/IDx=1
 -------------------------------------------------------------------------------
 2000040 2
 Default             1.0     0.3     2.0       26        425
-Bacanora   1             0             2          34.2           350
+Bacanora   1             0             2          32.2           425
 -------------------------------------------------------------------------------
 Specific leaf weight vs development stage    //Groot, 1987
 The first row:  Section code / Number of data sets
@@ -214,7 +214,7 @@ Variety     ReservRatio  RelResvGrwRate MaxStorageGrwRate (=G2)  Storage N cum R
 -------------------------------------------------------------------------------
 2000060 2
 Default         0.4     0.01     2.5        0.055
-Bacanora   0.4        0.01        3.63       0.055
+Bacanora   0.4        0.01        1.27       0.055
 -------------------------------------------------------------------------------
 Storage Growth Rate vs Temperature (Grain Filling Rate-mg/grain.d)
 (Potential growth rate of individual grains in dependence of temperature)

@@ -16,14 +16,15 @@ query      <- list()
 query$all  <- FALSE    # TRUE: all made new 
                        # NULL: queries are used 
                        # FALSE: none are updated
-query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
+#query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
 # load and source the setup | later, delete this, as it should be done automatically after the simulations
 source("./01_COMPUTATION_R/source_initialisation.R")
+query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
 
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NP_N"
+kmodelktrait <- "NS_N"
 #
 #
 #
