@@ -77,7 +77,7 @@ for(ksite in k$ksite.v[k$ksite.v%in%c(1:30)]){
       tpl_input$"$10020" <-  data$shp[site==ksite][ , .(no.layer, text = "Sl3", theta_pwp, theta_fc, porosity = THS*1.05, K0)]
 
       # 10021 -----
-      tpl_input$"$10021" <- data$shp[site==ksite][  , .(no.layer, THS, THR,ModellgroesseAev =-99, ModellgroesseCampellB =7, ALF, N, M=1-1/N, L, q = 1, r= 2  )]
+      tpl_input$"$10021" <- data$shp[site==ksite][  , .(no.layer, THR, THS,  ModellgroesseAev =-99, ModellgroesseCampellB =7, ALF, N, M=1-1/N, L, q = 1, r= 2  )]
    }
    
    ######    REFORMAT   ######

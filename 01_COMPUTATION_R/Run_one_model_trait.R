@@ -12,12 +12,12 @@
 # 0 INITIALISE ----
 query         <- list()
    
-query$all     <- TRUE   # TRUE: all made new 
+query$all     <- NULL   # TRUE: all made new 
                          # NULL: queries are used and selected input files created
                          # FALSE: none are updated
    
-query$xnp     <- TRUE    # TRUE: xnp is made new
-query$xnd     <- TRUE   # TRUE: xnd is made new
+query$xnp     <- FALSE    # TRUE: xnp is made new
+query$xnd     <- FALSE   # TRUE: xnd is made new
 query$xnm     <- TRUE    # TRUE: xnm is made new
 
 run_base_only <- FALSE
