@@ -96,13 +96,13 @@ if(ksite%in%k$ksite.update2.excl){
 if(!ksite%in%k$ksite.update2.excl){
    
    # 10010
-   tpl_input$no_soil_lyr     <- data$sprop[site == ksite] %>% nrow
+   tpl_input$no_soil_lyr     <- sum(data$sprop[site == ksite]$no_layers)
    
-   interim                   <- data$sprop[site == ksite][ , .(1, no_layers, USCLAY, USSILT, USSAND, OC, BD, stone_content, PH_H2O)]
+   interim                   <- data$sprop[site == ksite][ , .(1:nrow(data$sprop[site == ksite]) , no_layers, USCLAY, USSILT, USSAND, OC, BD, stone_content, PH_H2O)]
    tpl_input$soil_lyr_table  <- interim %>% apply(., 1, formatC) %>% t %>% apply(., 1, function(x) paste(x, collapse = "\t")) %>% paste(., collapse="\n") 
    
    # 10011
-   interim                   <- data$sprop[site == ksite][ , .(1:tpl_input$no_soil_lyr , no_layers, ICNO3M, ICNH4M )]
+   interim                   <- data$sprop[site == ksite][ , .(1:nrow(data$sprop[site == ksite]), no_layers, ICNO3M, ICNH4M )]
    interim$WassergehaltBoden <- data$shp[site == ksite][, .((theta_pwp + (theta_fc-theta_pwp)*conv$ICfrac) %>% round(., 3) )]
    interim$Matrixpotential   <- -99
    interim$Bodentemperatur   <-  10
