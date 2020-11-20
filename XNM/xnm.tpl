@@ -16,8 +16,8 @@ $10011
 =============================================================================
 SOIL PHYSICAL PARAMETERS (Bodenbibliothek der Datenerfassung)
 Layer	|Soil	|Wilting	|Field		|Total Pore	|Satur. Hydr.
-	|type	|Point		|Capacity	|Volume		|Conductivity
-	|ADV	|Vol.%		|Vol.%		|Vol.%		|mm/d
+	    |type	|Point		|Capacity	|Volume		|Conductivity
+	    |ADV	|Vol.%		|Vol.%		|Vol.%		|mm/d
 =============================================================================
 10020
 $10020
@@ -25,7 +25,7 @@ $10020
 =============================================================================
 SOIL HYDRAULIC CURVE PARAMETERS
 Layer	|Water	|Campbell		|van Genuchten
-	|Res.	|Sat.	|A	|B	|alpha	|n	|m
+	|Res.	|Sat.	|A		|B	|alpha	|n	|m
 	|Vol.%	|Vol%	|kPa	|1/1	|1/cm	|1/1	|1/1
 =============================================================================
 10021

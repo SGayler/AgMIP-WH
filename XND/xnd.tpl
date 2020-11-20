@@ -36,7 +36,7 @@ Fruchtart	Ertrag	Ernte-		Ernte-		C/N Ernte-	Wurzel-		C/N Wurzel-
 			termin	rückstände	rückstände	rückstände	rückstände
 			kg/ha	Datum		kg/ha		1/1			kg/ha		1/1
 10004
-WH 		$DatumStart			7000		1000			80			2000			21			-99
+WH 		7000	$DatumStart		1000	80	2000	21	-99
 ===================================================================================================================================
 *Cultivated Crop
 Nr.	Bez.Variety	Sowing	Row-	Seed-	Plant	Emerge	Harvest	Date	max.Root.	max. Root.	Removal

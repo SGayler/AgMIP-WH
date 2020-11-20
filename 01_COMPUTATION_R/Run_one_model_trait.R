@@ -12,7 +12,7 @@
 # 0 INITIALISE ----
 query         <- list()
    
-query$all     <- FALSE   # TRUE: all made new 
+query$all     <- TRUE   # TRUE: all made new 
                          # NULL: queries are used and selected input files created
                          # FALSE: none are updated
    

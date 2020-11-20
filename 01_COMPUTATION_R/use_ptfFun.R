@@ -88,9 +88,20 @@ query <- apply(abs(dsl1)<abs(dsl2), 1, any) %>% t %>% t
 
 X.euptf[query, c(3,2,4,5,6,7)] <- X.RM9[query,c(1,2,3,4,5,7)] 
 
-fcwp <- apply(X.euptf[,c(3,2,4,5,6,7)], 1, function(x) shypFun.01110(x, c(330, 15000))$theta ) %>% t %>% data.table %>% set_names(c("theta_fc", "theta_pwp"))
+fcwp              <- apply(X.euptf[,c(3,2,4,5,6,7)], 1, function(x) shypFun.01110(x, c(330, 15000))$theta ) %>% t %>% data.table %>% set_names(c("theta_fc", "theta_pwp"))
+X.euptf           <- data.table(X.euptf, fcwp)
 
-data.table(X.euptf, fcwp)
+colnamesPTF       <- colnames(X.euptf)
+colnamesPTF[str_detect(colnamesPTF, "_PTF")] <- colnamesPTF[str_detect(colnamesPTF, "_PTF")] %>%  strsplit(., "_") %>% do.call(., what = "rbind") %>% .[,1]
+colnamesPTF[str_detect(colnamesPTF, "ALP")] <- "ALF"
+colnames(X.euptf) <- colnamesPTF
+
+X.euptf$THS      <- X.euptf$THS      * 100
+X.euptf$THR      <- X.euptf$THR      * 100
+X.euptf$K0       <- X.euptf$K0       * 10
+X.euptf$theta_fc <- X.euptf$theta_fc * 100
+X.euptf$theta_pwp<- X.euptf$theta_pwp* 100
 
 fwrite(X.euptf, "./00_DATA/SHP_VGM_noNA.csv")
+
 

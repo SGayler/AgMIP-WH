@@ -60,31 +60,56 @@ interim <- data.table("Ausbringungstermin" = c(ymd(data$manag$date_fert1[ksite])
                       , "AmmoniumNGehaltDuenger"= 75
                       , "AmidNGehalDuenger"     = 0
 )
-tpl_input$no_min_fert        <- nrow(interim)
-interim$Ausbringungstermin   %<>% ymd %>% format(., "%d%m%y")
-tpl_input$min_fert_table     <-  paste(apply(interim, 1, function(x) paste(x, collapse = "\t")), collapse="\n")
+tpl_input$no_min_fert      <- nrow(interim)
+interim$Ausbringungstermin %<>% ymd %>% format(., "%d%m%y")
+tpl_input$min_fert_table   <-  paste(apply(interim, 1, function(x) paste(x, collapse = "\t")), collapse="\n")
 rm(interim)
 
-# 10010 ----
-interim        <- data.table(sqlFetch(con, "StammBodenprofilSchichten"))
-interim        <- interim[, c("Schichtnummer", "AnzSimSchichten", "Tongehalt", "Schluffgehalt","Sandgehalt"
-                              , "GehaltOrganischerKohlenstoff","Lagerungsdichte", "Steingehalt","Ph"
-)]
-tpl_input$no_soil_lyr   <- sum(interim$AnzSimSchichten )
-tpl_input$soil_lyr_table<-  interim %>% apply(., 1, formatC) %>% t %>% apply(., 1, function(x) paste(x, collapse = "\t")) %>% paste(., collapse="\n")  
+if(ksite%in%k$ksite.update2.excl){
+   # OLD VERSION FOR NON UPDATED SITES IN UPDATE 2
+   # 10010 ----
+   interim        <- data.table(sqlFetch(con, "StammBodenprofilSchichten"))
+   interim        <- interim[, c("Schichtnummer", "AnzSimSchichten", "Tongehalt", "Schluffgehalt","Sandgehalt"
+                                 , "GehaltOrganischerKohlenstoff","Lagerungsdichte", "Steingehalt","Ph"
+   )]
+   tpl_input$no_soil_lyr   <- sum(interim$AnzSimSchichten)
+   
+   tpl_input$soil_lyr_table<-  interim %>% apply(., 1, formatC) %>% t %>% apply(., 1, function(x) paste(x, collapse = "\t")) %>% paste(., collapse="\n")  
+   
+   # 10011 ----
+   interim        <- data.table(sqlFetch(con, "BewegungStartwerte"))[Termin %between% c(tpl_input$Saattermin, tpl_input$TerminErnteNutzung)] %>% 
+      unique(., by = c("Termin", "Schichtnummer"))
+   interim$Termin          %<>% ymd %>% -"-"(conv$SimStart_before_Sowing) %>%  format(., "%d%m%y")
+   interim                 <- interim[, c("Schichtnummer", "Schichtdicke", "WassergehaltBoden", "Bodenemperatur"
+                                 , "AmmoniumgehaltBoden","NitratgehaltBoden"
+   )]
+   interim$Matrixpotential <- "-99"
+   interim$RootDensity     <- "-99"
+   interim$Schichtdicke    %<>% "/"(conv$sim_lyr_thickness)
+   
+   interim <- interim[,c("Schichtnummer", "Schichtdicke", "WassergehaltBoden","Matrixpotential",
+                         "Bodenemperatur", "AmmoniumgehaltBoden", "NitratgehaltBoden", "RootDensity")]
 
-# 10011 ----
-interim        <- data.table(sqlFetch(con, "BewegungStartwerte"))[Termin %between% c(tpl_input$Saattermin, tpl_input$TerminErnteNutzung)] %>% 
-   unique(., by = c("Termin", "Schichtnummer"))
-interim$Termin   %<>% ymd %>% format(., "%d%m%y")
-interim        <- interim[, c("Schichtnummer", "Schichtdicke", "WassergehaltBoden", "Bodenemperatur"
-                              , "AmmoniumgehaltBoden","NitratgehaltBoden"
-)]
-interim$Matrixpotential <- "-99"
-interim$RootDensity     <- "-99"
-interim$Schichtdicke    %<>% "/"(5)
+}
 
-interim <- interim[,c("Schichtnummer", "Schichtdicke", "WassergehaltBoden","Matrixpotential",
-                      "Bodenemperatur", "AmmoniumgehaltBoden", "NitratgehaltBoden", "RootDensity")]
+# ----------     UPDATE2 10010 and 10011    ------------  
+if(!ksite%in%k$ksite.update2.excl){
+   
+   # 10010
+   tpl_input$no_soil_lyr     <- data$sprop[site == ksite] %>% nrow
+   
+   interim                   <- data$sprop[site == ksite][ , .(1, no_layers, USCLAY, USSILT, USSAND, OC, BD, stone_content, PH_H2O)]
+   tpl_input$soil_lyr_table  <- interim %>% apply(., 1, formatC) %>% t %>% apply(., 1, function(x) paste(x, collapse = "\t")) %>% paste(., collapse="\n") 
+   
+   # 10011
+   interim                   <- data$sprop[site == ksite][ , .(1:tpl_input$no_soil_lyr , no_layers, ICNO3M, ICNH4M )]
+   interim$WassergehaltBoden <- data$shp[site == ksite][, .((theta_pwp + awc*conv$ICfrac) %>% round(., 3) )]
+   interim$Matrixpotential   <- -99
+   interim$Bodentemperatur   <-  10
+   interim$RootDensity       <- -99
+   
+   interim  <- setcolorder(interim, c("V1", "no_layers", "WassergehaltBoden", "Matrixpotential", "Bodentemperatur", "ICNO3M", "ICNH4M", "RootDensity"))
+
+}
 tpl_input$soil_ic_table <-  paste(apply(interim, 1, function(x) paste(x, collapse = " ")), collapse="\n")
 # END

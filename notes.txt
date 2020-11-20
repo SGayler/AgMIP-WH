@@ -12,3 +12,4 @@ notes
 UPDATE2 NOTES
 - Added the residues of 1-30 also to site 31, and 34
 - do Update XND and XNM: excluded c(9, 10, 14, 17)
+- 

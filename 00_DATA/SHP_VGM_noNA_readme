@@ -22,7 +22,7 @@ slsil		%-vol				Soil texture, silt (0.05 to 0.002 mm)
 slsnd		%-vol				Soil texture, sand (0.05 to 2.0 mm)				
 slphw		-					pH of soil in water								
 ICH2O		%-vol				Initial water content							
-ICNH4M		kg[N]/ha			Initial NO3, as elemental N						
+ICNO3M		kg[N]/ha			Initial NO3, as elemental N						
 ICNH4M		kg[N]/ha			Initial NH4, as elemental N						
 awc			mm	   				Available water content							
 sksat_d		cm/d				Saturated hydraulic conductivity 				
