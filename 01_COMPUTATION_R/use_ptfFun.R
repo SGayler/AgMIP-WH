@@ -88,5 +88,9 @@ query <- apply(abs(dsl1)<abs(dsl2), 1, any) %>% t %>% t
 
 X.euptf[query, c(3,2,4,5,6,7)] <- X.RM9[query,c(1,2,3,4,5,7)] 
 
+fcwp <- apply(X.euptf[,c(3,2,4,5,6,7)], 1, function(x) shypFun.01110(x, c(330, 15000))$theta ) %>% t %>% data.table %>% set_names(c("theta_fc", "theta_pwp"))
+
+data.table(X.euptf, fcwp)
+
 fwrite(X.euptf, "./00_DATA/SHP_VGM_noNA.csv")
 

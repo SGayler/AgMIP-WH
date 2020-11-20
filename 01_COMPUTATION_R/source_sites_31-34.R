@@ -17,7 +17,7 @@ tpl_input <- list()
 # correction factor
 corfac <- days(10)
 
-tpl_input$DatumStart <- ymd(data$manag[ksite]$date_sowing) + years(kyear-1) - data$SimStart_before_Sowing
+tpl_input$DatumStart <- ymd(data$manag[ksite]$date_sowing) + years(kyear-1) - conv$SimStart_before_Sowing
 tpl_input$DatumEnde  <- ymd(data$manag[ksite]$date_maturity) + years(kyear-1) + months(1)
 
 # 10001 and 10002----
@@ -33,8 +33,8 @@ tpl_input$'xnc'  <- paste0(kmodel,".xnc")
 # 10004 ----
 # ignored
 # 10005 ----
-tpl_input$Saattermin         <- tpl_input$DatumStart + data$SimStart_before_Sowing
-tpl_input$TerminAuflaufen    <- tpl_input$DatumStart + data$SimStart_before_Sowing + days(14)
+tpl_input$Saattermin         <- tpl_input$DatumStart + conv$SimStart_before_Sowing
+tpl_input$TerminAuflaufen    <- tpl_input$DatumStart + conv$SimStart_before_Sowing + days(14)
 tpl_input$TerminErnteNutzung <- tpl_input$DatumEnde
 
 # 10006 ---- 

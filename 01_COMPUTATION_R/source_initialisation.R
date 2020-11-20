@@ -27,7 +27,7 @@ if(!require("viridis")){install.packages("viridis"); library(viridis)}
 rm(list = ls() %>% grep(., pattern = "query|run_base_only", value = TRUE, invert = TRUE)); gc(); graphics.off()
 
 # initialise lists
-data <- path <- tpl <- k <- list()
+data <- path <- tpl <- k <- conv <- list()
 
 path$DATA        <- "./00_DATA"
 path$R_ROOT      <- "./01_COMPUTATION_R/"
@@ -42,17 +42,23 @@ path$XND         <- "./XND/"
 path$XNP         <- "./XNP/"
 path$XNM         <- "./XNM/"
 
+# Correction of simulation start in days before sowing. Initial condition, etc, corrected accordingly.
+conv$SimStart_before_Sowing <- days(10)
+# fraction of AWC to be used as initial condition.
+conv$ICfrac      <- 0.75    
+
 if(!dir.exists(path$PROJ_ROOT )){dir.create(path$PROJ_ROOT)}
 # read data
-data$manag <- fread(file.path(path$DATA, "wheat_regions.csv"   ))
-data$treat <- fread(file.path(path$DATA, "treatment_layout.csv"))
-data$fnames<- fread(file.path(path$DATA, "filenames.csv"       ))
+data$manag       <- fread(file.path(path$DATA, "wheat_regions.csv"   ))
+data$treat       <- fread(file.path(path$DATA, "treatment_layout.csv"))
+data$fnames      <- fread(file.path(path$DATA, "filenames.csv"       ))
+data$shp         <- fread(file.path(path$DATA, "00_DATA/SHP_VGM_noNA.csv"))
+data$sprop       <- fread(file.path(path$DATA, "soil_properties.csv"))
 
-# Correction of simulation start in days before sowing. Initial condition, etc, corrected accordingly.
-data$SimStart_before_Sowing <- days(10)
+
 
 # get full paths of all data bases
-path$files.v    <- list.files(path      = "./"
+path$files.v    <- list.files(path        = "./"
                               , full.names= TRUE
                               , recursive = TRUE
                               , pattern   = ".mdb"

@@ -6,4 +6,9 @@ notes
 - no soil management
 - no irrigation
 - where does the elevated c02 go?
-- ROTS without forced emergence data, as in the GECROS callibration data
+- ROTS without forced emergence data, as in the GECROS calibration data
+
+
+UPDATE2 NOTES
+- Added the residues of 1-30 also to site 31, and 34
+- do Update XND and XNM: excluded c(9, 10, 14, 17)

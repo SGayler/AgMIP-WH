@@ -39,7 +39,7 @@ Crop	Yield	harvest-	Crop-	C/N Crop-	root-	C/N root-
 		date		residues	Residues	residues	residues
 	kg/ha	Datum	kg/ha	1/1	kg/ha	1/1
 10004
-Pea	-99	-99	-99	-99	-99	-99
+WH 		$DatumStart			7000		1000			80			2000			21			-99
 ===============================================================================
 *Cultivated Crop
 Nr.	Bez.	Variety	Sowing	Row-	Seed-	Plant	Emerge	Harvest	Date	max.Root.	max. Root.	Removal
