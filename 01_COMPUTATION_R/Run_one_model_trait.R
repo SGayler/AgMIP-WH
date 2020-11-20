@@ -91,8 +91,8 @@ for(kxnp in k$kxnp.v){
    system.time(paste(file.path(path$SOURCE_ROOT, kmodeltrait, "expertn.exe"), "/autostart") %>% system(., timeout = 0))
       
    # 1f remove .xnw (save disk space)
-   list.files(file.path(path$PROJ_ROOT, kmodeltrait), pattern = data$fnames[ksite]$name_short, full.names = TRUE)  %>% 
-      lapply(., file.remove) %>% invisible
+   # list.files(file.path(path$PROJ_ROOT, kmodeltrait), pattern = data$fnames[ksite]$name_short, full.names = TRUE)  %>% 
+   #    lapply(., file.remove) %>% invisible
 
 }
 
