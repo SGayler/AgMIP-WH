@@ -65,7 +65,7 @@ interim$Ausbringungstermin %<>% ymd %>% format(., "%d%m%y")
 tpl_input$min_fert_table   <-  paste(apply(interim, 1, function(x) paste(x, collapse = "\t")), collapse="\n")
 rm(interim)
 
-if(ksite%in%k$ksite.update2.excl){
+if(!ksite%in%k$ksite.update2.excl){
    # OLD VERSION FOR NON UPDATED SITES IN UPDATE 2
    # 10010 ----
    interim        <- data.table(sqlFetch(con, "StammBodenprofilSchichten"))
@@ -93,7 +93,7 @@ if(ksite%in%k$ksite.update2.excl){
 }
 
 # ----------     UPDATE2 10010 and 10011    ------------  
-if(!ksite%in%k$ksite.update2.excl){
+if(ksite%in%k$ksite.update2.excl){
    
    # 10010
    tpl_input$no_soil_lyr     <- data$sprop[site == ksite] %>% nrow
