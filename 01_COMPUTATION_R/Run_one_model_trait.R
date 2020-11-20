@@ -97,5 +97,5 @@ for(kxnp in k$kxnp.v){
 }
 
 # add email sending error messages, here.
-# source("./01_COMPUTATION_R/plot.R")
+source("./01_COMPUTATION_R/plot.R")
 
