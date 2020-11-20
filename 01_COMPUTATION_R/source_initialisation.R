@@ -101,13 +101,15 @@ if(!(c("Irrigated", "Rainfed") %in% unique(data$manag$water_regime ) %>% all)){
 
 # 3 setup
 #all
-if(isTRUE(query$all)){
-   query %<>%  lapply(., function(x) return(TRUE))
-}
-if(isFALSE(query$all)){
-   query %<>%  lapply(., function(x) return(FALSE))
-}
+if(!is.null(query$all)){
 
+   if(isTRUE(query$all)){
+      query %<>%  lapply(., function(x) return(TRUE))
+   }
+   if(isFALSE(query$all)){
+      query %<>%  lapply(., function(x) return(FALSE))
+   }
+}
 #xnm
 if(isTRUE(query$xnm)){
    message("Setting up XNM files")
