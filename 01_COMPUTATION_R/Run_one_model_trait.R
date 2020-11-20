@@ -12,7 +12,7 @@
 # 0 INITIALISE ----
 query         <- list()
    
-query$all     <- NULL   # TRUE: all made new 
+query$all     <- FALSE   # TRUE: all made new 
                          # NULL: queries are used and selected input files created
                          # FALSE: none are updated
    
@@ -20,12 +20,12 @@ query$xnp     <- TRUE    # TRUE: xnp is made new
 query$xnd     <- TRUE   # TRUE: xnd is made new
 query$xnm     <- TRUE    # TRUE: xnm is made new
 
-run_base_only <- TRUE
+run_base_only <- FALSE
 # load and source the setup
 source("./01_COMPUTATION_R/source_initialisation.R")
 
 # RUN specific kmodel and ktrait combination
-kmodeltrait <- "NP_N"
+kmodeltrait <- "NG_N"
 
 # xni template files
 tpl         <- list.files(path$XNI, full.names = TRUE, pattern = "xni.tpl") %>%  lapply(., readLines) %>% setNames(., "xni")
@@ -35,11 +35,11 @@ tpl         <- list.files(path$XNI, full.names = TRUE, pattern = "xni.tpl") %>% 
 k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = ".xnp")
 
 #ausgewaehlte Sites:
-#query$pattern <- c(30:34)    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
-#k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = paste0(paste0(query$pattern, ".*.xnp"), collapse = "|")) %>% grep(k$kxnp.v , pattern = ".xnp", value = TRUE )
+query$pattern<- c("G1")#c("02","04", "08", "13", "15", "23", "26", "28") # c(2, 10, 13, 21, 24, 26, 27, 28, 29, 31, 34)    # NULL = no pattern query$pattern <- c(30:34, "01", "G1"), (oder/auch mit sprintf($02d,3:7))
+k$kxnp.v    <- file.path(path$PROJ_ROOT, kmodeltrait) %>% list.files(., pattern = paste0(paste0(query$pattern, ".*.xnp"), collapse = "|")) %>%
+   grep(k$kxnp.v , pattern = ".xnp", value = TRUE )
 
-
-if(isTRUE(run_base_only <- TRUE)){
+if(isTRUE(run_base_only == TRUE)){
    k$kxnp.v <-  k$kxnp.v[ str_detect(k$kxnp.v, pattern = "0-", negate = FALSE) ]
 }
 
@@ -83,7 +83,7 @@ for(kxnp in k$kxnp.v){
                                                                                                     
    # 1d delete old results
    file.path(path$PROJ_ROOT, kmodeltrait) %>% 
-      list.files(., pattern = paste(c(str_replace(kxnp,".xnp" ,".rfx"), str_remove(kxnp, ".xnp"), "rfg"), collapse ="|"), full.names = TRUE) %>% 
+      list.files(., pattern = paste(c(str_replace(kxnp,".xnp" ,".rf*"), str_remove(kxnp, ".xnp"), "rfg"), collapse ="|"), full.names = TRUE, recursive = TRUE) %>% 
       grep(., pattern = paste(c(".xnd",".xnp"), collapse="|"),  invert=TRUE, value = TRUE) %>% 
       unlink
    
@@ -97,5 +97,5 @@ for(kxnp in k$kxnp.v){
 }
 
 # add email sending error messages, here.
-
+source("./01_COMPUTATION_R/plot.R")
 

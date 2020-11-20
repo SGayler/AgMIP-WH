@@ -1,12 +1,19 @@
 ToDos
 
-0.   CHECK 				git "global step" einrichten
-1.   CHECK 				xnp's erstellen
-2.   CHECK 				xnd's für sites 31-34
-3a. CHECK				gtp sites 31-34 zusammentragen
-3b. CHECK 				co2 levels in .gtp Dateien festlegen.
-3c. CHECK 				alle gtp Dateien erstellen
-4.   4 xnc's zusammentragen (NG.xnc, NC.xnc, ....)
+0.       CHECK 				git "global step" einrichten
+1.       CHECK 				xnp's erstellen
+2.       CHECK 				xnd's für sites 31-34
+3a.      CHECK				   gtp sites 31-34 zusammentragen
+3b.      CHECK 				co2 levels in .gtp Dateien festlegen.
+3c.      CHECK 				alle gtp Dateien erstellen
+4.       CHECK              4 xnc's zusammentragen (NG.xnc, NC.xnc, ....)
 5.   ? Pierres Korrekturen einbauen ?
-6.   Testen
-7.   Simulieren
+   5a.   CHECK            Tabelle Bodendaten erstellt 
+   5b.   CHECK             XND Anpassen: Simulationsstart 10 Tage vor Aussaat
+   5c.   CHECK             PTF Function und Abgleich
+   5d.         XND Anfangswassergehalt, Achtung, muss plausibel sein.
+   5e.         XND Nmin Anfangsgehalt
+   5f.         XNM VGM Parameter
+6.                  Testen
+7.                  Simulieren
+

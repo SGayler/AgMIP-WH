@@ -24,7 +24,7 @@ if(!require("tibble")){install.packages("tibble"); library(tibble)}
 if(!require("stringi")){install.packages("stringi"); library(stringi)}
 if(!require("viridis")){install.packages("viridis"); library(viridis)}
 
-rm(list = ls() %>% grep(., pattern = "query", value = TRUE, invert = TRUE)); gc(); graphics.off()
+rm(list = ls() %>% grep(., pattern = "query|run_base_only", value = TRUE, invert = TRUE)); gc(); graphics.off()
 
 # initialise lists
 data <- path <- tpl <- k <- list()
@@ -48,6 +48,9 @@ data$manag <- fread(file.path(path$DATA, "wheat_regions.csv"   ))
 data$treat <- fread(file.path(path$DATA, "treatment_layout.csv"))
 data$fnames<- fread(file.path(path$DATA, "filenames.csv"       ))
 
+# Correction of simulation start in days before sowing. Initial condition, etc, corrected accordingly.
+data$SimStart_before_Sowing <- days(10)
+
 # get full paths of all data bases
 path$files.v    <- list.files(path      = "./"
                               , full.names= TRUE
@@ -58,11 +61,11 @@ path$files.v    <- list.files(path      = "./"
 tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(., c("xnd", as.character(31:34)))
 
 # initialise the loops
-k$kmodel.v   <- "NP" # c("NC", "NG", "NP", "NS")         # the four models
-k$kyear.v    <- 1:30#15:25                                    # 1:30                # the thirty years 1:30
-k$ksite.v    <- 1:34                      # the number of sites 1:34, k$ksite.v    <- 1:nrow(data$fnames)
-k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[1:11]
-k$ktrait.v   <- unique(data$treat$code_trait)[1:2]         # the simulated traits 
+k$kmodel.v   <- "NG" # c("NC", "NG", "NP", "NS")         # the four models
+k$kyear.v    <- 1:30 # 15:25                             # 1:30    # the thirty years 1:30
+k$ksite.v    <- 1:34 # the number of sites 1:34, k$ksite.v    <- 1:nrow(data$fnames)
+k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[2]
+k$ktrait.v   <- unique(data$treat$code_trait)[1]       # the simulated traits 
 # hard set for AgMiP WHEAT Pahse 4
 k$year.v     <- 1981:2010                                # the harvest years
 row.names(data$fnames) <- 1:nrow(data$fnames)

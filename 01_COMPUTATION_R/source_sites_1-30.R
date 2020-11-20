@@ -13,6 +13,7 @@ tpl_input <- list()
 # 10000 ----
 # selects information of kth year
 tpl_input <-  sqlFetch(con, "Projekt") %>%  data.table %>% .[Projektname =="B0AMB"] %>% .[kyear, c("DatumStart", "DatumEnde")]  
+tpl_input$DatumStart %<>% "-"(data$SimStart_before_Sowing)
    # 10001 and 10002----
 # *Farm Data
 # hard coded to "1", since identical
