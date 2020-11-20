@@ -1,0 +1,29 @@
+site        -					site number from 1-34
+sllb		cm					Soil layer base depth							
+slll		mm3/mm3				Lower limit										
+sldul		mm3/mm3				Drained upper limit								
+slsat		mm3/mm3				Saturation										
+slrgf		-  					Root growth factor, soil only (0 to 1 scale) 	
+sksat		cm/h				Saturated hydraulic conductivity 				
+slbdm		g/cm3				Bulk density									
+SLOM		%-w					Total soil organic matter by layer 				
+sloc		g[C]/100g			Organic C										
+slni		g[N]/100g			Organic N										
+slcly		%-vol 				Soil texture, clay (<0.002 mm)					
+slsil		%-vol				Soil texture, silt (0.05 to 0.002 mm) 			
+slsnd		%-vol				Soil texture, sand (0.05 to 2.0 mm)				
+slphw		-					pH of soil in water								
+ICH2O		%-vol				Initial water content							
+ICNH4M		kg[N]/ha			Initial NO3, as elemental N						
+ICNH4M		kg[N]/ha			Initial NH4, as elemental N						
+awc			mm	   				Available water content							
+sksat_d		cm/d				Saturated hydraulic conductivity 				
+USCLAY	    %-vol 				Soil texture, clay (<0.002 mm)			
+USSILT	    %-vol				Soil texture, silt (0.05 to 0.002 mm) 	
+USSAND	    %-vol				Soil texture, sand (0.05 to 2.0 mm)		
+OC			g[C]/100g			Organic C
+BD			g/cm3				Bulk density	
+PH_H2O		-					pH of soil in water		
+DEPTH_M		cm					mid layer depth
+hz_bt		cm					horizon bottom layer
+hz_tp		cm					horizon top layer
