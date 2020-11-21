@@ -17,7 +17,7 @@ query$all     <- NULL   # TRUE: all made new
                          # FALSE: none are updated
    
 query$xnp     <- TRUE    # TRUE: xnp is made new
-query$xnd     <- TRUE   # TRUE: xnd is made new
+query$xnd     <- FALSE   # TRUE: xnd is made new
 query$xnm     <- TRUE    # TRUE: xnm is made new
 
 run_base_only <- FALSE
