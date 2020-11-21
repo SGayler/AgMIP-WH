@@ -12,12 +12,12 @@
 # 0 INITIALISE ----
 query         <- list()
    
-query$all     <- TRUE   # TRUE: all made new 
+query$all     <- NULL   # TRUE: all made new 
                          # NULL: queries are used and selected input files created
                          # FALSE: none are updated
    
 query$xnp     <- TRUE    # TRUE: xnp is made new
-query$xnd     <- TRUE   # TRUE: xnd is made new
+query$xnd     <- FALSE   # TRUE: xnd is made new
 query$xnm     <- TRUE    # TRUE: xnm is made new
 
 run_base_only <- FALSE
@@ -25,7 +25,7 @@ run_base_only <- FALSE
 source("./01_COMPUTATION_R/source_initialisation.R")
 
 # RUN specific kmodel and ktrait combination
-kmodeltrait <- "NG_N"
+kmodeltrait <- "NP_N"
 
 # xni template files
 tpl         <- list.files(path$XNI, full.names = TRUE, pattern = "xni.tpl") %>%  lapply(., readLines) %>% setNames(., "xni")
@@ -91,11 +91,11 @@ for(kxnp in k$kxnp.v){
    system.time(paste(file.path(path$SOURCE_ROOT, kmodeltrait, "expertn.exe"), "/autostart") %>% system(., timeout = 0))
       
    # 1f remove .xnw (save disk space)
-   # list.files(file.path(path$PROJ_ROOT, kmodeltrait), pattern = data$fnames[ksite]$name_short, full.names = TRUE)  %>% 
-   #    lapply(., file.remove) %>% invisible
+   list.files(file.path(path$PROJ_ROOT, kmodeltrait), pattern = data$fnames[ksite]$name_short, full.names = TRUE)  %>% 
+      lapply(., file.remove) %>% invisible
 
 }
 
 # add email sending error messages, here.
-source("./01_COMPUTATION_R/plot.R")
+# source("./01_COMPUTATION_R/plot.R")
 

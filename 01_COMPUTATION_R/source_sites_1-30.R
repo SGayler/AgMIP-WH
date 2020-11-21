@@ -102,13 +102,13 @@ if(!ksite%in%k$ksite.update2.excl){
    tpl_input$soil_lyr_table  <- interim %>% apply(., 1, formatC) %>% t %>% apply(., 1, function(x) paste(x, collapse = "\t")) %>% paste(., collapse="\n") 
    
    # 10011
-   interim                   <- data$sprop[site == ksite][ , .(1:nrow(data$sprop[site == ksite]), no_layers, ICNO3M, ICNH4M )]
+   interim                   <- data$sprop[site == ksite][ , .(1:nrow(data$sprop[site == ksite]), no_layers, ICNH4M, ICNO3M )]
    interim$WassergehaltBoden <- data$shp[site == ksite][, .((theta_pwp + (theta_fc-theta_pwp)*conv$ICfrac) %>% round(., 3) )]
    interim$Matrixpotential   <- -99
    interim$Bodentemperatur   <-  10
    interim$RootDensity       <- -99
    
-   interim  <- setcolorder(interim, c("V1", "no_layers", "WassergehaltBoden", "Matrixpotential", "Bodentemperatur", "ICNO3M", "ICNH4M", "RootDensity"))
+   interim  <- setcolorder(interim, c("V1", "no_layers", "WassergehaltBoden", "Matrixpotential", "Bodentemperatur", "ICNH4M", "ICNO3M", "RootDensity"))
 
 }
 tpl_input$soil_ic_table <-  paste(apply(interim, 1, function(x) paste(x, collapse = " ")), collapse="\n")
