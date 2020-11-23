@@ -73,7 +73,7 @@ Development:Section code/1 PDD1,PDD2-pre- and post-anthesis physiol. dev. days
 -------------------------------------------------------------------------------
 2000030 2
 Default	    38        25         46       0.25          20      30      95
-Wyallkatchem-SW   37.5           24            0         0.25           20           30           92
+Wyallkatchem-SW   38.5           26            0         0.25           20           30           92
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 Rdev,v (pre-anthesis dev. rate) - Temp Response (Temp - C, Rdev,v - 1/d)

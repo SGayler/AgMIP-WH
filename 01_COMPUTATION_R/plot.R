@@ -16,14 +16,15 @@ query      <- list()
 query$all  <- FALSE    # TRUE: all made new 
 # NULL: queries are used 
 # FALSE: none are updated
-query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
+# query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
 # load and source the setup | later, delete this, as it should be done automatically after the simulations
-# source("./01_COMPUTATION_R/source_initialisation.R")
+source("./01_COMPUTATION_R/source_initialisation.R")
+query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
 
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NG_N"
+kmodelktrait <- "NP_N"
 #
 #
 #
@@ -124,7 +125,7 @@ rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
    xplot     <- (length(unique(rfp.dt$climate))*xplot+1)/length(unique(rfp.dt$climate))
    
    # PLOT ANTHESIS
-   windows(height = 10, width = 20, xpos = 400)
+   windows(height = 6, width = 10, xpos = 50)
    par(oma = c(3,3,1,1))
    
    with(rfp.dt, {
@@ -146,7 +147,7 @@ rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
    
    # PLOT MATURITY
    
-   windows(height = 10, width = 20, xpos = 400)
+   windows(height = 6, width = 10, xpos = 900)
    par(oma = c(3,3,1,1))
    with(rfp.dt, {
       # SIM
