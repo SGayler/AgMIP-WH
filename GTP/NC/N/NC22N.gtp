@@ -23,7 +23,7 @@ Pmax,340(kgCO2/ha/h) Eff(g/J)   rm(s/m)   CO2CmpPt(ppm)    Ci/Ca    PsCurveQ    
 -------------------------------------------------------------------------------
 2000010 2
 Default     40       0.6        110          38        0.7      0   0.0055
-Wyallkatchem-SW   40           0.6           110            38           0.7             0         0.004
+Wyallkatch   40           0.6           110            38           0.7             0         0.004
 -------------------------------------------------------------------------------
 Pmax-Temp Response (Temp [ C] vs. Pmax[ kgCO2/ha/h])
 The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
@@ -73,7 +73,7 @@ Development:Section code/1 PDD1,PDD2-pre- and post-anthesis physiol. dev. days
 -------------------------------------------------------------------------------
 2000030 2
 Default	    38        25         46       0.25          20      30      95
-Wyallkatchem-SW   37.5            24             0          0.25            20           450           132
+Wyallkatch   37.5            24             0          0.25            20           450           132
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 Rdev,v (pre-anthesis dev. rate) - Temp Response (Temp - C, Rdev,v - 1/d)
@@ -156,7 +156,7 @@ Section code/IDx=1
 -------------------------------------------------------------------------------
 2000040 2
 Default             1.0     0.3     2.0       26        425
-Wyallkatchem-SW   1    0    2   36  350
+Wyallkatch   1    0    2   36  350
 -------------------------------------------------------------------------------
 Specific leaf weight vs development stage    //Groot, 1987
 The first row:  Section code / Number of data sets
@@ -214,7 +214,7 @@ Variety     ReservRatio  RelResvGrwRate MaxStorageGrwRate (=G2)  Storage N cum R
 -------------------------------------------------------------------------------
 2000060 2
 Default         0.4     0.01     2.5        0.055
-Wyallkatchem-SW   0.4        0.01           3       0.055
+Wyallkatch   0.4        0.01           3       0.055
 -------------------------------------------------------------------------------
 Storage Growth Rate vs Temperature (Grain Filling Rate-mg/grain.d)
 (Potential growth rate of individual grains in dependence of temperature)
