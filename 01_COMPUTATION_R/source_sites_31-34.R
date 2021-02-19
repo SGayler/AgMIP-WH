@@ -43,9 +43,9 @@ interim <- data.table("Ausbringungstermin" = c(ymd(data$manag$date_fert1[ksite])
                                                ymd(data$manag$date_fert2[ksite]) - years(year(data$manag$date_sowing[ksite]) - year(tpl_input$Saattermin)))
                       , "D?ngerart"             = "Ammonnitrat"
                       , "Code"                  = "FE001"
-                      , "Ausbringungsmenge"     = 150
-                      , "NitratNGehaltDuenger"  = 75
-                      , "AmmoniumNGehaltDuenger"= 75
+                      , "Ausbringungsmenge"     = data$total_Nfert_amount/2
+                      , "NitratNGehaltDuenger"  = data$total_Nfert_amount/2/2
+                      , "AmmoniumNGehaltDuenger"= data$total_Nfert_amount/2/2
                       , "AmidNGehalDuenger"     = 0
 )
 tpl_input$no_min_fert        <- nrow(interim)

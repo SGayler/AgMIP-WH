@@ -33,6 +33,7 @@ path$DATA        <- "./00_DATA"
 path$R_ROOT      <- "./01_COMPUTATION_R/"
 path$PROJ_ROOT   <- "./02_COMPUTATION_XN/"
 path$SOURCE_ROOT <- "./03_SOURCES/"
+path$PLOT        <- "./04_PLOTS"
 path$GTP         <- "./GTP/"
 path$XNI         <- "./XNI/"
 path$XNW         <- "./Wetterdateien/"
@@ -65,17 +66,17 @@ data$sprop       <- fread(file.path(path$DATA, "soil_properties.csv"))
 # data wrangling
 data$sprop[, no_layers := (hz_bt -hz_tp)/conv$sim_lyr_thickness]
 data$sprop[, stone_content := 0]
-
+data$total_Nfert_amount <- 220      # [kg-N/ha]
 # xnd template files
 tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(., c("xnd", as.character(31:34)))
 
 # initialise the loops
 
-k$kmodel.v   <- "NP" # c("NC", "NG", "NP", "NS")         # the four models
-k$kyear.v    <- 1:30# 15:25                              # 1:30    # the thirty years 1:30
-k$ksite.v    <- 1:34 # c(9, 10, 14, 17, 31:34)   # the number of sites 1:34, k$ksite.v <- 1:nrow(data$fnames)
-k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[1]
-k$ktrait.v   <- unique(data$treat$code_trait)[1]         # the simulated traits 
+k$kmodel.v   <- "NG" # c("NC", "NG", "NP", "NS")         # the four models
+k$kyear.v    <- (1:30)# 15:25                        # 1:30    # the thirty years 1:30
+k$ksite.v    <- (1:34)# c(9, 10, 14, 17, 31:34)   # the number of sites 1:34, k$ksite.v <- 1:nrow(data$fnames)
+k$krcpgcm.v  <- c("0-","G1","G2","GK","GO","GR","I1","I2","IK","IO","IR")[2:11]
+k$ktrait.v   <- unique(data$treat$code_trait)[1:1]         # the simulated traits 
 # hard set for AgMiP WHEAT Pahse 4
 k$year.v     <- 1981:2010                                # the harvest years
 k$ksite.update2.excl <- c(9, 10, 14, 17, 31:34)          # the sites which are NOT included in global step 1 UPDATE2           

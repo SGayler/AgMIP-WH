@@ -23,10 +23,9 @@ tpl <- lapply(list.files("./XNP/", full.names = TRUE, pattern="xnp.tpl"), readLi
 for(kmodel in k$kmodel.v){
    for(ksite in k$ksite.v){ 
       for(krcpgcm in k$krcpgcm.v){ 
-         tpl_xnp   <- tpl$xnp
-         tpl_input <- list()
-         
          for(ktrait in k$ktrait.v){ 
+            tpl_xnp   <- tpl$xnp
+            tpl_input <- list()
             # 10111 -----
             tpl_input$"$10111" <-  paste0("10111 ", str_remove(kmodel, pattern = "N"), sprintf("%02d", ksite), krcpgcm, ktrait,"_",k$year.v[k$kyear.v], ".xnd") %>% 
                paste(., collapse="\n")

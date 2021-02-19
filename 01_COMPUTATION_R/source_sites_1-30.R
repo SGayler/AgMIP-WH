@@ -13,6 +13,13 @@ tpl_input <- list()
 # 10000 ----
 # selects information of kth year
 tpl_input <-  sqlFetch(con, "Projekt") %>%  data.table %>% .[Projektname =="B0AMB"] %>% .[kyear, c("DatumStart", "DatumEnde")]  
+
+# NEW: THIS WAS DONE TO CORRECT FOR A MISTAKE IN THE DATABASE OF SITE 26
+if(ksite==26){
+   # tpl_input$DatumEnde %<>% "-"(years(1))
+   tpl_input$DatumStart %<>% "+"(years(1))
+}
+
 tpl_input$DatumStart %<>% "-"(conv$SimStart_before_Sowing)
    # 10001 and 10002----
 # *Farm Data
@@ -55,9 +62,9 @@ interim <- data.table("Ausbringungstermin" = c(ymd(data$manag$date_fert1[ksite])
                                                ymd(data$manag$date_fert2[ksite]) - years(year(data$manag$date_sowing[ksite]) - year(tpl_input$Saattermin)))
                       , "Düngerart"             = "Ammonnitrat"
                       , "Code"                  = "FE001"
-                      , "Ausbringungsmenge"     = 150
-                      , "NitratNGehaltDuenger"  = 75
-                      , "AmmoniumNGehaltDuenger"= 75
+                      , "Ausbringungsmenge"     = data$total_Nfert_amount/2
+                      , "NitratNGehaltDuenger"  = data$total_Nfert_amount/2/2
+                      , "AmmoniumNGehaltDuenger"= data$total_Nfert_amount/2/2
                       , "AmidNGehalDuenger"     = 0
 )
 tpl_input$no_min_fert      <- nrow(interim)

@@ -11,35 +11,34 @@
 
 
 # 0 INITIALISE ----
-query      <- list()
+query          <- list()
 
-query$all  <- FALSE    # TRUE: all made new 
+query$plot2file <- FALSE
 # NULL: queries are used 
 # FALSE: none are updated
-# query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
+query$base_only <- FALSE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
 # load and source the setup | later, delete this, as it should be done automatically after the simulations
 source("./01_COMPUTATION_R/source_initialisation.R")
-query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
+#
+
+#if(isTRUE(query$base_only )){
+#   rfp.dt <- rfp.dt[climate=="0-"] %>% droplevels 
+#   
+#}
 
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NP_N"
+kmodelktrait <- "NG_N"
 #
-#
-#
-#
-
-# for saving the plot (not used, yet)
-# path$plot$kmodeltrait <- file.path(path$PROJ_ROOT, kmodelktrait, "plot")
-# dir.create(path$plot$kmodeltrait, showWarnings = FALSE)
+dir.create(file.path(path$PLOT, kmodelktrait), showWarnings = FALSE, recursive = TRUE)
 
 # SET THE BBCH STAGES YOU WISH TO COMPARE TO
 data$BBCH$maturity <- 92
 data$BBCH$anthesis <- 65
 
 # the skip element in k is used to specify the skipped lines to read the .rfp
-k$skip$rfp             <- 32
+k$skip$rfp         <- 32
 
 
 # initialise data table
@@ -54,11 +53,12 @@ rfp.dt$names_rfp   <- file.path(path$PROJ_ROOT, kmodelktrait, "result") %>%  lis
 rfp.dt$site    <- rfp.dt$names_rfp %>% str_sub(., 1, 2) %>% as.integer
 rfp.dt$climate <- rfp.dt$names_rfp %>% str_sub(., 3, 4) %>% as.factor
 
-#
+
 if(isTRUE(query$base_only )){
    rfp.dt <- rfp.dt[climate=="0-"] %>% droplevels 
    
 }
+
 
 
 # prepare an  index for sorting
@@ -91,8 +91,9 @@ for(i in 1:nrow(rfp.dt)){
    # assign
    rfp.dt$SIM_61_DATE[i] <- int.dt$V1[which.min(abs(int.dt$V2 - data$BBCH$anthesis))] 
    rfp.dt$SIM_92_DATE[i] <- int.dt$V1[which.min(abs(int.dt$V2 - data$BBCH$maturity))] 
-   rfp.dt$YIELD[i]       <- max(int.dt$V8) 
-   rfp.dt$ABVBM[i]       <- max(int.dt$V7) 
+   rfp.dt$YIELD[i]       <- max(int.dt$V8)     # v8 is colum 8 in rfp file
+   #rfp.dt$ABVBM[i]       <- max(int.dt$V7)     # v8 is colum 7 in rfp file 
+   rfp.dt$ABVBM[i]       <- int.dt$V7[which.min(abs(int.dt$V2 - data$BBCH$maturity))]     # v8 is colum 7 in rfp file 
    
    setTxtProgressBar(pb, i)
 }; close(pb)
@@ -106,9 +107,6 @@ rfp.dt$date_sowing  <- ymd(rfp.dt$date_sowing) + years(rfp.dt$int - 1981)
 
 rfp.dt[, SIM_61_dt := difftime(SIM_61_DATE, date_sowing, units = "day") %>% as.integer]
 rfp.dt[, SIM_92_dt := difftime(SIM_92_DATE, date_sowing, units = "day") %>% as.integer]
-
-rfp.dt[site==26, SIM_61_dt := SIM_61_dt+365]
-rfp.dt[site==26, SIM_92_dt := SIM_92_dt+365]
 
 #convert to numbers
 rfp.dt$YIELD<- as.numeric(rfp.dt$YIELD)/1000
@@ -125,9 +123,17 @@ rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
    xplot     <- (length(unique(rfp.dt$climate))*xplot+1)/length(unique(rfp.dt$climate))
    
    # PLOT ANTHESIS
-   windows(height = 6, width = 10, xpos = 50)
-   par(oma = c(3,3,1,1))
-   
+   if(isTRUE(query$plot2file)){
+      png(file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_ANT", ".png"))
+          , height= 20
+          , width = 50
+          , units = "cm"
+          , res   = 600)
+   }else{
+      windows(height = 10, width = 20, xpos = 400)
+      par(oma = c(3,3,1,1))
+   }
+
    with(rfp.dt, {
       # SIM   
       bp <<- boxplot(abs(SIM_61_dt) ~ climate +site, col = viridis::viridis(length(unique(climate))),
@@ -144,11 +150,19 @@ rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
    mtext("DAS [d]", 2, line = 4, cex = 2)
    legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::viridis(length(unique(rfp.dt$climate))), cex = 2)
    box()
+   if(isTRUE(query$plot2file)){dev.off()}
    
    # PLOT MATURITY
-   
-   windows(height = 6, width = 10, xpos = 900)
-   par(oma = c(3,3,1,1))
+   if(isTRUE(query$plot2file)){
+      png(file.path(path$PLOT, kmodelktrait, paste0(kmodelktrait, "_MAT", ".png"))
+          , height= 20
+          , width = 50
+          , units = "cm"
+          , res   = 600)
+   }else{
+      windows(height = 10, width = 20, xpos = 400)
+      par(oma = c(3,3,1,1))
+   }
    with(rfp.dt, {
       # SIM
       bp <<- boxplot(abs(SIM_92_dt) ~ climate +site, col = viridis::viridis(length(unique(climate))),
@@ -166,54 +180,101 @@ rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
    legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::viridis(length(unique(rfp.dt$climate))), cex = 2)
    
    box()
+   if(isTRUE(query$plot2file)){dev.off()}
+   
+   # PLOT YIELD
+   if(isTRUE(query$plot2file)){
+      png(file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_YIELD", ".png"))
+          , height= 20
+          , width = 50
+          , units = "cm"
+          , res   = 600)
+   }else{
+      windows(height = 10, width = 20, xpos = 400)
+      par(oma = c(3,3,1,1))
+   }
+   par(oma = c(3, 3, 1, 1))
+   with(rfp.dt, {
+      # SIM
+      bp <<- boxplot(YIELD ~ climate +site, col = viridis::viridis(length(unique(climate))),
+                     axes = F, ylab = "", xlab = "", ylim = c(0,25)
+                     , main = paste("YIELD",kmodelktrait))
+   })
+   
+   axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
+   axis(2, at = seq(0,20,2), cex.axis = 1.5)
+   mtext("site"   , 1, line = 4, cex = 2)
+   mtext("Yield [t/ha]", 2, line = 4, cex = 2)
+   legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::viridis(length(unique(rfp.dt$climate))), cex = 2)
+   
+   box()
+   if(isTRUE(query$plot2file)){dev.off()}
    
    
-   # # PLOT YIELD
-   # 
-   # windows(height = 10, width = 20, xpos = 400)
-   # par(oma = c(3, 3, 1, 1))
-   # with(rfp.dt, {
-   #    # SIM
-   #    bp <<- boxplot(YIELD ~ climate +site, col = viridis::viridis(length(unique(climate))),
-   #                   axes = F, ylab = "", xlab = "", ylim = c(0,20)
-   #                   , main = paste("YIELD",kmodelktrait))
-   # })
-   # 
-   # axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
-   # axis(2, at = seq(0,20,2), cex.axis = 1.5)
-   # mtext("site"   , 1, line = 4, cex = 2)
-   # mtext("Yield [t/ha]", 2, line = 4, cex = 2)
-   # legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::viridis(length(unique(rfp.dt$climate))), cex = 2)
-   # 
-   # box()
-   # 
-   # # PLOT HI
-   # 
-   # windows(height = 10, width = 20, xpos = 400)
-   # par(oma = c(3, 3, 1, 1))
-   # with(rfp.dt, {
-   #    # SIM
-   #    bp <<- boxplot(HI ~ climate + site, col = viridis::viridis(length(unique(climate))),
-   #                   axes = F, ylab = "", xlab = "", ylim = c(0.2,.8)
-   #                   , main = paste("Harvest Index", kmodelktrait))
-   # })
-   # abline(h = .63, col = "red")
-   # axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
-   # axis(2, at = seq(.2,.8,.1), cex.axis = 1.5)
-   # mtext("site"   , 1, line = 4, cex = 2)
-   # mtext("Yield [t/ha]", 2, line = 4, cex = 2)
-   # legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::magma(length(unique(rfp.dt$climate))), cex = 2)
-   # 
-   # box()
+   
+   # PLOT HI
+   if(isTRUE(query$plot2file)){
+      png(file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_HI", ".png"))
+          , height= 20
+          , width = 50
+          , units = "cm"
+          , res   = 600)
+   }else{
+      windows(height = 10, width = 20, xpos = 400)
+      par(oma = c(3,3,1,1))
+   }
+   par(oma = c(3, 3, 1, 1))
+   with(rfp.dt, {
+      # SIM
+      bp <<- boxplot(HI ~ climate + site, col = viridis::viridis(length(unique(climate))),
+                     axes = F, ylab = "", xlab = "", ylim = c(0.2,.8)
+                     , main = paste("Harvest Index", kmodelktrait))
+   })
+   abline(h = .63, col = "red")
+   axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
+   axis(2, at = seq(.2,.8,.1), cex.axis = 1.5)
+   mtext("site"   , 1, line = 4, cex = 2)
+   mtext("Harvest Index [-]", 2, line = 4, cex = 2)
+   legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::magma(length(unique(rfp.dt$climate))), cex = 2)
+   
+   box()
+   if(isTRUE(query$plot2file)){dev.off()}
 }
+
+
+## OUTPUT TO FILES
+if(isTRUE(query$base_only )){
+
+dcast(rfp.dt, int ~ site, value.var = "YIELD") %>% .[,int:=NULL] %>%  rbind(.,apply(., 2, quantile)) %>%  set_rownames(., paste(c(1981:2010,"0%","25%","50%","75%","100%")))%>%
+   fwrite(., file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_YIELD", ".csv")), row.names = TRUE)
+
+dcast(rfp.dt, int ~ site, value.var = "ABVBM") %>% .[,int:=NULL] %>%  rbind(.,apply(., 2, quantile)) %>%  set_rownames(., paste(c(1981:2010,"0%","25%","50%","75%","100%")))%>%
+   fwrite(., file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_ABVBM", ".csv")), row.names = TRUE)
+
+dcast(rfp.dt, int ~ site, value.var = "HI") %>% .[,int:=NULL] %>%  rbind(.,apply(., 2, quantile)) %>%  set_rownames(., paste(c(1981:2010,"0%","25%","50%","75%","100%")))%>%
+   fwrite(., file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_HI", ".csv")), row.names = TRUE)
+
+
+(apply(dcast(rfp.dt, int ~ site, value.var = "SIM_61_dt") %>% .[,int:=NULL], 1, function(x) x- as.integer(OBS_ant)) %>%  t)%>% 
+   rbind(.,apply(., 2, quantile)) %>% data.table %>% 
+   set_rownames(., paste(c(1981:2010,"0%","25%","50%","75%","100%")))%>%
+   fwrite(., file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_ANT", ".csv")), row.names = TRUE)
+
+(apply(dcast(rfp.dt, int ~ site, value.var = "SIM_92_dt") %>% .[,int:=NULL], 1, function(x) x- as.integer(OBS_mat)) %>%  t)%>%  
+   rbind(.,apply(., 2, quantile)) %>% data.table %>% 
+   set_rownames(., paste(c(1981:2010,"0%","25%","50%","75%","100%")))%>%
+   fwrite(., file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_MAT", ".csv")), row.names = TRUE)
+
+}
+
 
 # rfp.dt[SIM_61_dt<0]
 
 
-cbind(
-     "MTDV" = (sapply(1:34, function(x) mean(OBS_ant[x] - rfp.dt[site==x]$SIM_61_dt)) %>%   round(., 1))
-   , "MTDR" = (sapply(1:34, function(x) mean(OBS_mat[x] - rfp.dt[site==x]$SIM_92_dt)) %>%   round(., 1))
-   ) %>% t %>% set_colnames(., c(1:34)) %>% print
+# cbind(
+#      "MTDV" = (sapply(1:34, function(x) mean(OBS_ant[x] - rfp.dt[site==x]$SIM_61_dt)) %>%   round(., 1))
+#    , "MTDR" = (sapply(1:34, function(x) mean(OBS_mat[x] - rfp.dt[site==x]$SIM_92_dt)) %>%   round(., 1))
+#    ) %>% t %>% set_colnames(., c(1:34)) %>% print
 
 
 

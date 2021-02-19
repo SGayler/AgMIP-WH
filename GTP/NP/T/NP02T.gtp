@@ -23,7 +23,7 @@ Pmax,340(kgCO2/ha/h) Eff(g/J)   rm(s/m)   CO2CmpPt(ppm)    Ci/Ca    PsCurveQ    
 -------------------------------------------------------------------------------
 2000010 2
 Default     40       0.6        110          38        0.7      0   0.0055
-Bacanora   0.804           110            38           0.7             0         0.004           NaN
+Bacanora    40        0.804           110            38           0.7             0         0.004
 -------------------------------------------------------------------------------
 Pmax-Temp Response (Temp [ C] vs. Pmax[ kgCO2/ha/h])
 The first row: section code/IDx/Minimum Temp./Opt.Temp/Max.Temp.
