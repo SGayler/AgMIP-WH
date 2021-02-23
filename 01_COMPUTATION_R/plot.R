@@ -16,7 +16,7 @@ query          <- list()
 query$plot2file <- FALSE
 # NULL: queries are used 
 # FALSE: none are updated
-query$base_only <- FALSE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
+query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
 # load and source the setup | later, delete this, as it should be done automatically after the simulations
 source("./01_COMPUTATION_R/source_initialisation.R")
 #
@@ -29,7 +29,7 @@ source("./01_COMPUTATION_R/source_initialisation.R")
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NG_N"
+kmodelktrait <- "NP_N"
 #
 dir.create(file.path(path$PLOT, kmodelktrait), showWarnings = FALSE, recursive = TRUE)
 
@@ -82,6 +82,8 @@ rfp.dt$SIM_61_DATE <- rep("NAN", nrow(rfp.dt))
 rfp.dt$SIM_92_DATE <- rep("NAN", nrow(rfp.dt))
 rfp.dt$YIELD       <- rep("NAN", nrow(rfp.dt))
 rfp.dt$ABVBM       <- rep("NAN", nrow(rfp.dt))
+rfp.dt$NCONC_G     <- rep("NAN", nrow(rfp.dt))
+rfp.dt$PROTEIN     <- rep("NAN", nrow(rfp.dt))
 
 for(i in 1:nrow(rfp.dt)){
    
@@ -94,6 +96,7 @@ for(i in 1:nrow(rfp.dt)){
    rfp.dt$YIELD[i]       <- max(int.dt$V8)     # v8 is colum 8 in rfp file
    #rfp.dt$ABVBM[i]       <- max(int.dt$V7)     # v8 is colum 7 in rfp file 
    rfp.dt$ABVBM[i]       <- int.dt$V7[which.min(abs(int.dt$V2 - data$BBCH$maturity))]     # v8 is colum 7 in rfp file 
+   rfp.dt$NCONC_G[i]       <- int.dt$V16[which.min(abs(int.dt$V2 - data$BBCH$maturity))]  
    
    setTxtProgressBar(pb, i)
 }; close(pb)
@@ -112,6 +115,7 @@ rfp.dt[, SIM_92_dt := difftime(SIM_92_DATE, date_sowing, units = "day") %>% as.i
 rfp.dt$YIELD<- as.numeric(rfp.dt$YIELD)/1000
 rfp.dt$ABVBM<- as.numeric(rfp.dt$ABVBM)/1000
 rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
+rfp.dt$PROTEIN <-as.numeric(rfp.dt$NCONC_G)*6.25
 
 # PLOT
 {
@@ -239,6 +243,33 @@ rfp.dt$HI   <- rfp.dt$YIELD/(rfp.dt$YIELD+rfp.dt$ABVBM)
    
    box()
    if(isTRUE(query$plot2file)){dev.off()}
+   
+   # PLOT PROTEIN
+   if(isTRUE(query$plot2file)){
+      png(file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_PROTEIN", ".png"))
+          , height= 20
+          , width = 50
+          , units = "cm"
+          , res   = 600)
+   }else{
+      windows(height = 10, width = 20, xpos = 400)
+      par(oma = c(3,3,1,1))
+   }
+   par(oma = c(3, 3, 1, 1))
+   with(rfp.dt, {
+      # SIM
+      bp <<- boxplot(PROTEIN ~ climate + site, col = viridis::viridis(length(unique(climate))),
+                     axes = F, ylab = "", xlab = "", ylim = c(0,20)
+                     , main = paste("Protein concentration", kmodelktrait))
+   })
+   axis(1, at = xplot, labels = unique(rfp.dt$site),las = 2, cex.axis = 1.5)
+   axis(2, at = seq(0,20,2), cex.axis = 1.5)
+   mtext("site"   , 1, line = 4, cex = 2)
+   mtext("concentration [%]", 2, line = 4, cex = 2)
+   legend("topleft", legend = unique(rfp.dt$climate), fill = viridis::magma(length(unique(rfp.dt$climate))), cex = 2)
+   
+   box()
+   if(isTRUE(query$plot2file)){dev.off()}
 }
 
 
@@ -253,6 +284,9 @@ dcast(rfp.dt, int ~ site, value.var = "ABVBM") %>% .[,int:=NULL] %>%  rbind(.,ap
 
 dcast(rfp.dt, int ~ site, value.var = "HI") %>% .[,int:=NULL] %>%  rbind(.,apply(., 2, quantile)) %>%  set_rownames(., paste(c(1981:2010,"0%","25%","50%","75%","100%")))%>%
    fwrite(., file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_HI", ".csv")), row.names = TRUE)
+
+dcast(rfp.dt, int ~ site, value.var = "PROTEIN") %>% .[,int:=NULL] %>%  rbind(.,apply(., 2, quantile)) %>%  set_rownames(., paste(c(1981:2010,"0%","25%","50%","75%","100%")))%>%
+   fwrite(., file.path(path$PLOT,kmodelktrait, paste0(kmodelktrait, "_PROTEIN", ".csv")), row.names = TRUE)
 
 
 (apply(dcast(rfp.dt, int ~ site, value.var = "SIM_61_dt") %>% .[,int:=NULL], 1, function(x) x- as.integer(OBS_ant)) %>%  t)%>% 
