@@ -13,10 +13,10 @@
 # 0 INITIALISE ----
 query          <- list()
 
-query$plot2file <- FALSE
+query$plot2file <- TRUE
 # NULL: queries are used 
 # FALSE: none are updated
-query$base_only <- TRUE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
+query$base_only <- FALSE# TRUE: only baseline plotted/considered, else, all rcpgcms will be plotted
 # load and source the setup | later, delete this, as it should be done automatically after the simulations
 source("./01_COMPUTATION_R/source_initialisation.R")
 #
@@ -29,7 +29,7 @@ source("./01_COMPUTATION_R/source_initialisation.R")
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NP_N"
+kmodelktrait <- "NG_N"
 #
 dir.create(file.path(path$PLOT, kmodelktrait), showWarnings = FALSE, recursive = TRUE)
 
