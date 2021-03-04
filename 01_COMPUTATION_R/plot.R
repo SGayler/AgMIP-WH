@@ -29,7 +29,7 @@ source("./01_COMPUTATION_R/source_initialisation.R")
 #
 #  SET THIS MANUALLY
 #
-kmodelktrait <- "NG_N"
+kmodelktrait <- "NP_N"
 #
 dir.create(file.path(path$PLOT, kmodelktrait), showWarnings = FALSE, recursive = TRUE)
 

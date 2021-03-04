@@ -72,7 +72,7 @@ tpl <- lapply(list.files("./XND/", full.names = TRUE), readLines) %>%  setNames(
 
 # initialise the loops
 
-k$kmodel.v   <- "NG" # c("NC", "NG", "NP", "NS")         # the four models
+k$kmodel.v   <- "NP" # c("NC", "NG", "NP", "NS")         # the four models
 k$kyear.v    <- (1:30)# 15:25                        # 1:30    # the thirty years 1:30
 k$ksite.v    <- (1:34)# c(9, 10, 14, 17, 31:34)   # the number of sites 1:34, k$ksite.v <- 1:nrow(data$fnames)
 #k$ksite.v    <- c("01")# c(9, 10, 14, 17, 31:34)   # the number of sites 1:34, k$ksite.v <- 1:nrow(data$fnames)
